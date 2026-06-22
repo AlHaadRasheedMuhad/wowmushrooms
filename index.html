@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Silk Road</title>
+   <style>
+   * { box-sizing: border-box; }
+
+   .sr-form-box {
+       background: #fff;
+       border: 1px solid #ccc;
+       margin-bottom: 15px;
+   }
+   .sr-form-box summary {
+       background: #e8e8e8;
+       padding: 8px 12px;
+       cursor: pointer;
+       font-size: 13px;
+       font-weight: bold;
+       color: #333;
+       list-style: none;
+       border-bottom: 1px solid #ccc;
+   }
+   .sr-form-box summary::-webkit-details-marker { display: none; }
+   .sr-form-box summary::before { content: "+ "; color: #666; }
+   .sr-form-box[open] summary::before { content: "- "; }
+
+   .sr-form { padding: 12px; }
+   .sr-form input, .sr-form textarea {
+       width: 100%;
+       padding: 6px 8px;
+       margin-bottom: 8px;
+       border: 1px solid #ccc;
+       font-size: 13px;
+       font-family: Arial, sans-serif;
+       background: #fff;
+       color: #333;
+   }
+   .sr-form textarea { resize: vertical; min-height: 50px; }
+   .sr-form button[type="submit"] {
+       padding: 6px 14px;
+       border: 1px solid #ccc;
+       background: #f0f0f0;
+       font-size: 13px;
+       cursor: pointer;
+       font-family: Arial, sans-serif;
+   }
+   .sr-form button[type="submit"]:hover { background: #e0e0e0; }
+   .sr-form button[type="submit"]:disabled { background: #f5f5f5; color: #999; cursor: not-allowed; }
+
+   .sr-dropzone {
+       border: 2px dashed #ccc;
+       padding: 20px;
+       text-align: center;
+       color: #999;
+       margin-bottom: 8px;
+       font-size: 12px;
+       background: #fafafa;
+   }
+   .sr-dropzone.dragover { border-color: #32CD32; color: #32CD32; background: #f0fff0; }
+
+   .sr-status {
+       color: #c00;
+       font-size: 12px;
+       margin: -4px 0 8px 0;
+       min-height: 16px;
+   }
+
+   /* Product Grid */
+   .sr-grid {
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);
+       gap: 15px;
+   }
+
+   .sr-card {
+       background: #fff;
+       border: 1px solid #ccc;
+       padding: 10px;
+       cursor: pointer;
+       transition: box-shadow 0.15s;
+   }
+   .sr-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+   .sr-img-box {
+       width: 100%;
+       height: 120px;
+       background: #eee;
+       overflow: hidden;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+   }
+   .sr-img-box img {
+       max-width: 100%;
+       max-height: 100%;
+       object-fit: contain;
+       display: block;
+   }
+
+   .sr-title {
+       font-size: 12px;
+       color: #32CD32;
+       margin-top: 8px;
+       font-weight: bold;
+       line-height: 1.3;
+       word-break: break-word;
+   }
+   .sr-seller-row {
+       margin-top: 4px;
+       display: flex;
+       align-items: center;
+       gap: 6px;
+       flex-wrap: wrap;
+   }
+   .sr-seller {
+       font-size: 12px;
+       color: #999;
+   }
+   .sr-rep {
+       font-size: 9px;
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
+       padding: 1px 6px;
+       border-radius: 3px;
+       border: 1px solid;
+       font-weight: bold;
+   }
+   .sr-price {
+       font-size: 14px;
+       color: #c00;
+       margin-top: 8px;
+       font-weight: bold;
+   }
+   .sr-votes {
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       margin-top: 6px;
+       font-size: 12px;
+   }
+   .sr-votebtn {
+       background: transparent;
+       border: 1px solid #ddd;
+       color: #999;
+       padding: 2px 8px;
+       border-radius: 3px;
+       cursor: pointer;
+       font-size: 12px;
+       font-family: Arial, sans-serif;
+       display: flex;
+       align-items: center;
+       gap: 4px;
+   }
+   .sr-votebtn:hover { border-color: #bbb; color: #666; }
+   .sr-votebtn.up { border-color: #32CD32; color: #32CD32; background: #f0fff0; }
+   .sr-votebtn.down { border-color: #c00; color: #c00; background: #fff0f0; }
+
+   .sr-empty {
+       color: #999;
+       text-align: center;
+       padding: 40px;
+       grid-column: 1 / -1;
+       font-size: 13px;
+   }
+
+   /* Modal */
+   .sr-modal-overlay {
+       display: none;
+       position: fixed;
+       top: 0; left: 0; right: 0; bottom: 0;
+       background: rgba(0,0,0,0.6);
+       z-index: 100;
+       justify-content: center;
+       align-items: center;
+       padding: 20px;
+   }
+   .sr-modal-overlay.active { display: flex; }
+   .sr-modal-box {
+       background: #fff;
+       border: 1px solid #ccc;
+       max-width: 600px;
+       width: 100%;
+       max-height: 90vh;
+       overflow-y: auto;
+       position: relative;
+       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+   }
+   .sr-modal-close {
+       position: absolute;
+       top: 8px; right: 12px;
+       color: #999;
+       font-size: 22px;
+       cursor: pointer;
+       background: none;
+       border: none;
+       line-height: 1;
+   }
+   .sr-modal-close:hover { color: #333; }
+   .sr-modal-img {
+       width: 100%;
+       max-height: 300px;
+       object-fit: contain;
+       background: #eee;
+       display: block;
+   }
+   .sr-modal-content { padding: 15px; }
+   .sr-modal-title {
+       color: #32CD32;
+       font-size: 18px;
+       font-weight: bold;
+       margin-bottom: 6px;
+   }
+   .sr-modal-price {
+       color: #c00;
+       font-size: 16px;
+       font-weight: bold;
+       margin-bottom: 6px;
+   }
+   .sr-modal-meta {
+       color: #666;
+       font-size: 12px;
+       margin-bottom: 12px;
+   }
+   .sr-modal-votes {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       margin-bottom: 12px;
+       padding: 8px;
+       background: #f5f5f5;
+       border: 1px solid #eee;
+   }
+   .sr-modal-desc {
+       color: #333;
+       font-size: 13px;
+       line-height: 1.5;
+       white-space: pre-wrap;
+       margin-bottom: 15px;
+   }
+   .sr-modal-contact {
+       background: #f0f8ff;
+       border: 1px solid #cce5ff;
+       padding: 12px;
+   }
+   .sr-modal-contact-label {
+       color: #32CD32;
+       font-size: 11px;
+       text-transform: uppercase;
+       letter-spacing: 1px;
+       font-weight: bold;
+       margin-bottom: 6px;
+   }
+   .sr-modal-contact-info {
+       color: #333;
+       font-size: 13px;
+       word-break: break-all;
+   }
+
+   /* Tab Panel */
+   .sr-tab-panel {
+       background: #fff;
+       border: 1px solid #ccc;
+       margin-bottom: 15px;
+   }
+   .sr-tab-header {
+       background: #e8e8e8;
+       padding: 8px 12px;
+       font-size: 13px;
+       font-weight: bold;
+       color: #333;
+       border-bottom: 1px solid #ccc;
+   }
+   .sr-tab-body {
+       padding: 12px;
+   }
+   .sr-tab-body p {
+       color: #666;
+       font-size: 13px;
+       margin: 0 0 10px 0;
+   }
+
+   @media (max-width: 900px) {
+       .sr-grid { grid-template-columns: repeat(2, 1fr); }
+   }
+   @media (max-width: 500px) {
+       .sr-grid { grid-template-columns: 1fr; }
+   }
+   </style>
+</head>
+<body style="background: #f5f5f5; font-family: Arial, sans-serif; padding: 20px; margin: 0;">
+
+<!-- Account bar -->
+<div style="display: flex; justify-content: flex-end; font-size: 13px; color: #333; margin-bottom: 5px;">
+   <div style="width: 250px; text-align: right; padding-right: 38px;">
+       messages <span style="color: #999;">0</span> |
+       orders <span style="color: #999;">0</span> |
+       account <span style="color: #32CD32; font-weight: bold;">฿0.00</span>
+   </div>
+</div>
+
+<!-- Logo + Search -->
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #ccc;">
+   <div style="display: flex; align-items: center; gap: 10px;">
+     <img src="https://i.ibb.co/1tnncPcB/Silk-Road-Icon.png" style="height: 52px; width: auto; display: block;">
+
+       <div>
+           <h1 style="font-size: 32px; margin: 0; color: #333;">Silk Road</h1>
+           <h3 style="margin: 0; font-size: 12px; font-weight: normal; font-style: italic; color: #666;"><b>anonymous market</b></h3>
+       </div>
+   </div>
+   <div style="display: flex; align-items: center; gap: 10px;">
+       <span style="font-size: 13px; font-weight: bold; color: #333;">Search</span>
+       <input type="text" style="padding: 4px 8px; border: 1px solid #ccc; border-right: 0; font-size: 13px; width: 250px;">
+       <button style="padding: 4px 12px; border: 1px solid #ccc; background: #f0f0f0; font-size: 13px; cursor: pointer; margin-left: -1px;">Go</button>
+   </div>
+</div>
+
+<!-- Main content -->
+<div style="display: flex; gap: 20px;">
+
+   <!-- Sidebar -->
+   <div style="flex-shrink: 0;">
+       <div style="background: #e8e8e8; display: inline-block; padding: 3px 10px; border: 1px solid #ccc; border-bottom: 0; font-size: 12px; color: #333;">
+           Shop by Category
+       </div>
+       <div id="srSidebar" style="width: 200px; background: #fff; border: 1px solid #ccc; padding: 5px 0; color: #32CD32;">
+
+           <details data-cat="Drugs">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Drugs <span style="color: #999;">8,670</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Cannabis</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Dissociatives</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Ecstasy</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Opioids</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Prescription</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Psychedelics</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Steroids</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Stimulants</div>
+               </div>
+           </details>
+
+           <details data-cat="Apparel">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Apparel <span style="color: #999;">264</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">T-Shirts</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Hoodies</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Jackets</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Accessories</div>
+               </div>
+           </details>
+
+           <details data-cat="Art">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Art <span style="color: #999;">127</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Paintings</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Sculptures</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Digital Art</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Prints</div>
+               </div>
+           </details>
+
+           <details data-cat="Books">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Books <span style="color: #999;">861</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Fiction</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Non-Fiction</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Textbooks</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Rare Editions</div>
+               </div>
+           </details>
+
+           <details data-cat="Collectables">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Collectables <span style="color: #999;">5</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Coins</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Stamps</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Trading Cards</div>
+               </div>
+           </details>
+
+           <details data-cat="Computer Equipment">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Computer Equipment <span style="color: #999;">32</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Laptops</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Components</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Peripherals</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Networking</div>
+               </div>
+           </details>
+
+           <details data-cat="Custom Orders">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Custom Orders <span style="color: #999;">68</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">3D Printing</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">CNC Work</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Custom PCBs</div>
+               </div>
+           </details>
+
+           <details data-cat="Digital Goods">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Digital Goods <span style="color: #999;">509</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Software</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">E-Books</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Accounts</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Keys</div>
+               </div>
+           </details>
+
+           <details data-cat="Drug Paraphernalia">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Drug Paraphernalia <span style="color: #999;">305</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Pipes</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Grinders</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Scales</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Storage</div>
+               </div>
+           </details>
+
+           <details data-cat="Electronics">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Electronics <span style="color: #999;">77</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Phones</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Tablets</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Cameras</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Audio</div>
+               </div>
+           </details>
+
+           <details data-cat="Erotica">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Erotica <span style="color: #999;">0</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Literature</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Art</div>
+               </div>
+           </details>
+
+           <details data-cat="Fireworks">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Fireworks <span style="color: #999;">2</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Rockets</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Fountains</div>
+               </div>
+           </details>
+
+           <details data-cat="Food">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Food <span style="color: #999;">0</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Snacks</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Specialty</div>
+               </div>
+           </details>
+
+           <details data-cat="Forgeries">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Forgeries <span style="color: #999;">18</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Documents</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Currency</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">IDs</div>
+               </div>
+           </details>
+
+           <details data-cat="Hardware">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Hardware <span style="color: #999;">0</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Tools</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Machinery</div>
+               </div>
+           </details>
+
+           <details data-cat="Herbs & Supplements">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Herbs & Supplements <span style="color: #999;">0</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Vitamins</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Herbal</div>
+               </div>
+           </details>
+
+           <details data-cat="Home & Garden">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Home & Garden <span style="color: #999;">0</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Seeds</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Equipment</div>
+               </div>
+           </details>
+
+           <details data-cat="Jewelry">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Jewelry <span style="color: #999;">4</span></summary>
+               <div style="padding-left: 15px;">
+                   <div style="padding: 2px 10px; font-size: 12px;">Rings</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Necklaces</div>
+                   <div style="padding: 2px 10px; font-size: 12px;">Watches</div>
+               </div>
+           </details>
+
+       </div>
+   </div>
+
+   <!-- MAIN AREA: Tab Panel + Static Grid -->
+   <div style="flex: 1;">
+
+       <!-- Tab Panel -->
+       <div class="sr-tab-panel">
+           <div class="sr-tab-header" id="tab-title">Welcome to Silk Road</div>
+           <div class="sr-tab-body" id="tab-content">
+               <p>Select a category from the sidebar to browse listings. Clicking a category will open its subcategories and show available items here.</p>
+           </div>
+       </div>
+
+
+              <!-- Static Product Grid -->
+       <div class="sr-grid" id="srGrid">
+           <div class="sr-empty">Select a category to view listings.</div>
+       </div>
+
+
+
+   </div>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const categoryData = {
+    "Drugs": {
+        title: "Drugs — 8,670 listings",
+        text: "Various substances available from verified vendors.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item A</div><div class="sr-seller-row"><span class="sr-seller">VendorX</span></div><div class="sr-price">฿1.20</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item B</div><div class="sr-seller-row"><span class="sr-seller">VendorY</span></div><div class="sr-price">฿0.80</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item C</div><div class="sr-seller-row"><span class="sr-seller">VendorZ</span></div><div class="sr-price">฿2.50</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item D</div><div class="sr-seller-row"><span class="sr-seller">VendorX</span></div><div class="sr-price">฿1.00</div></div>
+        `
+    },
+    "Apparel": {
+        title: "Apparel — 264 listings",
+        text: "Clothing and fashion accessories.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Tee</div><div class="sr-seller-row"><span class="sr-seller">StyleShop</span></div><div class="sr-price">฿0.30</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Leather Jacket</div><div class="sr-seller-row"><span class="sr-seller">GearHead</span></div><div class="sr-price">฿1.50</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Beanie</div><div class="sr-seller-row"><span class="sr-seller">KnitWit</span></div><div class="sr-price">฿0.15</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sneakers</div><div class="sr-seller-row"><span class="sr-seller">SoleTrade</span></div><div class="sr-price">฿0.90</div></div>
+        `
+    },
+    "Art": {
+        title: "Art — 127 listings",
+        text: "Original works, prints, and digital creations.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Abstract Print</div><div class="sr-seller-row"><span class="sr-seller">Artisan</span></div><div class="sr-price">฿0.45</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Digital Landscape</div><div class="sr-seller-row"><span class="sr-seller">PixelMage</span></div><div class="sr-price">฿0.20</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Bronze Sculpture</div><div class="sr-seller-row"><span class="sr-seller">MetalWorks</span></div><div class="sr-price">฿3.00</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Oil Painting</div><div class="sr-seller-row"><span class="sr-seller">CanvasKing</span></div><div class="sr-price">฿1.80</div></div>
+        `
+    },
+    "Books": {
+        title: "Books — 861 listings",
+        text: "Physical and digital literature.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Rare 1st Edition</div><div class="sr-seller-row"><span class="sr-seller">BookWorm</span></div><div class="sr-price">฿0.60</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sci-Fi Anthology</div><div class="sr-seller-row"><span class="sr-seller">PageTurner</span></div><div class="sr-price">฿0.25</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Technical Manual</div><div class="sr-seller-row"><span class="sr-seller">TechText</span></div><div class="sr-price">฿0.40</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Philosophy Comp.</div><div class="sr-seller-row"><span class="sr-seller">DeepThink</span></div><div class="sr-price">฿0.35</div></div>
+        `
+    },
+    "Collectables": {
+        title: "Collectables — 5 listings",
+        text: "Rare and unique collectible items.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Coin Set</div><div class="sr-seller-row"><span class="sr-seller">Numisma</span></div><div class="sr-price">฿2.00</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Stamp Collection</div><div class="sr-seller-row"><span class="sr-seller">Philately</span></div><div class="sr-price">฿0.75</div></div>
+        `
+    },
+    "Computer Equipment": {
+        title: "Computer Equipment — 32 listings",
+        text: "Hardware, components, and accessories.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">ThinkPad T420</div><div class="sr-seller-row"><span class="sr-seller">RetroTech</span></div><div class="sr-price">฿0.55</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">DDR3 RAM 8GB</div><div class="sr-seller-row"><span class="sr-seller">MemoryLane</span></div><div class="sr-price">฿0.20</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">SSD 120GB</div><div class="sr-seller-row"><span class="sr-seller">FastStorage</span></div><div class="sr-price">฿0.35</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">WiFi Card</div><div class="sr-seller-row"><span class="sr-seller">NetGear</span></div><div class="sr-price">฿0.15</div></div>
+        `
+    },
+    "Custom Orders": {
+        title: "Custom Orders — 68 listings",
+        text: "Bespoke manufacturing and fabrication services.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">3D Print Service</div><div class="sr-seller-row"><span class="sr-seller">PrintLab</span></div><div class="sr-price">฿0.50</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">CNC Aluminum Part</div><div class="sr-seller-row"><span class="sr-seller">MillMaster</span></div><div class="sr-price">฿1.10</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Custom PCB</div><div class="sr-seller-row"><span class="sr-seller">CircuitPro</span></div><div class="sr-price">฿0.80</div></div>
+        `
+    },
+    "Digital Goods": {
+        title: "Digital Goods — 509 listings",
+        text: "Software, accounts, and digital products.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">VPN Subscription</div><div class="sr-seller-row"><span class="sr-seller">SecureNet</span></div><div class="sr-price">฿0.10</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Game Key</div><div class="sr-seller-row"><span class="sr-seller">KeyMaster</span></div><div class="sr-price">฿0.30</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">E-Book Bundle</div><div class="sr-seller-row"><span class="sr-seller">DigiLib</span></div><div class="sr-price">฿0.15</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Software License</div><div class="sr-seller-row"><span class="sr-seller">CodeVault</span></div><div class="sr-price">฿0.25</div></div>
+        `
+    },
+    "Drug Paraphernalia": {
+        title: "Drug Paraphernalia — 305 listings",
+        text: "Accessories and tools.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Glass Pipe</div><div class="sr-seller-row"><span class="sr-seller">SmokeShop</span></div><div class="sr-price">฿0.20</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Precision Scale</div><div class="sr-seller-row"><span class="sr-seller">WeighIt</span></div><div class="sr-price">฿0.35</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Herb Grinder</div><div class="sr-seller-row"><span class="sr-seller">GrindHouse</span></div><div class="sr-price">฿0.18</div></div>
+        `
+    },
+    "Electronics": {
+        title: "Electronics — 77 listings",
+        text: "Consumer electronics and gadgets.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Smartphone</div><div class="sr-seller-row"><span class="sr-seller">PhoneDealer</span></div><div class="sr-price">฿1.20</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Action Camera</div><div class="sr-seller-row"><span class="sr-seller">CamPro</span></div><div class="sr-price">฿0.90</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Headphones</div><div class="sr-seller-row"><span class="sr-seller">SoundWave</span></div><div class="sr-price">฿0.45</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Tablet</div><div class="sr-seller-row"><span class="sr-seller">TabStore</span></div><div class="sr-price">฿0.85</div></div>
+        `
+    },
+    "Erotica": {
+        title: "Erotica — 0 listings",
+        text: "No active listings in this category.",
+        grid: `<div class="sr-empty">No listings available.</div>`
+    },
+    "Fireworks": {
+        title: "Fireworks — 2 listings",
+        text: "Pyrotechnics and displays.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Rocket Pack</div><div class="sr-seller-row"><span class="sr-seller">BoomShop</span></div><div class="sr-price">฿0.40</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Fountain Set</div><div class="sr-seller-row"><span class="sr-seller">Sparkle</span></div><div class="sr-price">฿0.25</div></div>
+        `
+    },
+    "Food": {
+        title: "Food — 0 listings",
+        text: "No active listings in this category.",
+        grid: `<div class="sr-empty">No listings available.</div>`
+    },
+    "Forgeries": {
+        title: "Forgeries — 18 listings",
+        text: "Replica documents and items.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Replica Diploma</div><div class="sr-seller-row"><span class="sr-seller">PaperTrail</span></div><div class="sr-price">฿0.50</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Novelty ID</div><div class="sr-seller-row"><span class="sr-seller">IDForge</span></div><div class="sr-price">฿0.60</div></div>
+        `
+    },
+    "Hardware": {
+        title: "Hardware — 0 listings",
+        text: "No active listings in this category.",
+        grid: `<div class="sr-empty">No listings available.</div>`
+    },
+    "Herbs & Supplements": {
+        title: "Herbs & Supplements — 0 listings",
+        text: "No active listings in this category.",
+        grid: `<div class="sr-empty">No listings available.</div>`
+    },
+    "Home & Garden": {
+        title: "Home & Garden — 0 listings",
+        text: "No active listings in this category.",
+        grid: `<div class="sr-empty">No listings available.</div>`
+    },
+    "Jewelry": {
+        title: "Jewelry — 4 listings",
+        text: "Rings, necklaces, and precious items.",
+        grid: `
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Silver Ring</div><div class="sr-seller-row"><span class="sr-seller">GemHunter</span></div><div class="sr-price">฿0.70</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Watch</div><div class="sr-seller-row"><span class="sr-seller">TimeKeep</span></div><div class="sr-price">฿1.50</div></div>
+            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Gold Chain</div><div class="sr-seller-row"><span class="sr-seller">BlingKing</span></div><div class="sr-price">฿2.00</div></div>
+        `
+    }
+};
+
+const allDetails = document.querySelectorAll('#srSidebar details');
+
+allDetails.forEach((targetDetail) => {
+    targetDetail.addEventListener("click", () => {
+        const cat = targetDetail.getAttribute('data-cat');
+        const data = categoryData[cat];
+
+        if (data) {
+            $('tab-title').textContent = data.title;
+            $('tab-content').innerHTML = '<p>' + data.text + '</p>';
+            $('srGrid').innerHTML = data.grid;
+        }
+
+        allDetails.forEach((detail) => {
+            if (detail !== targetDetail) {
+                detail.removeAttribute("open");
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
+// ===== SEARCH FEATURE =====
+const srSearchInput = document.querySelector('input[type="text"]');
+const srSearchBtn = document.querySelector('button');
+const srGrid = document.getElementById('srGrid');
+let srOriginalGrid = srGrid.innerHTML;
+
+function srDoSearch() {
+    const query = srSearchInput.value.trim().toLowerCase();
+    if (!query) {
+        srGrid.innerHTML = srOriginalGrid;
+        document.getElementById('tab-title').textContent = 'Welcome to Silk Road';
+        document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
+        document.querySelectorAll('#srSidebar details').forEach(d => d.removeAttribute('open'));
+        return;
+    }
+    
+    // Collect all matching cards and track which category they belong to
+    const allCards = [];
+    let firstMatchCat = null;
+    
+    for (const cat in categoryData) {
+        const div = document.createElement('div');
+        div.innerHTML = categoryData[cat].grid;
+        const cards = div.querySelectorAll('.sr-card');
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(query)) {
+                allCards.push(card.outerHTML);
+                if (!firstMatchCat) firstMatchCat = cat;
+            }
+        });
+    }
+    
+    if (allCards.length === 0) {
+        srGrid.innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
+        document.getElementById('tab-title').textContent = 'Search Results';
+        document.getElementById('tab-content').innerHTML = '<p>No matches.</p>';
+        document.querySelectorAll('#srSidebar details').forEach(d => d.removeAttribute('open'));
+    } else {
+        srGrid.innerHTML = allCards.join('');
+        // Switch sidebar to the category of the first match
+        document.querySelectorAll('#srSidebar details').forEach(d => {
+            if (d.getAttribute('data-cat') === firstMatchCat) {
+                d.setAttribute('open', '');
+            } else {
+                d.removeAttribute('open');
+            }
+        });
+        // Update tab to show that category's info
+        const data = categoryData[firstMatchCat];
+        document.getElementById('tab-title').textContent = data.title;
+        document.getElementById('tab-content').innerHTML = '<p>' + data.text + '</p>';
+    }
+}
+
+srSearchBtn.onclick = function() { srDoSearch(); };
+srSearchInput.onkeypress = function(e) { if(e.key === 'Enter') srDoSearch(); };
+
+window.addEventListener('load', function() {
+    srOriginalGrid = srGrid.innerHTML;
+});
+
+
+</script>
+
+</body>
+</html>
