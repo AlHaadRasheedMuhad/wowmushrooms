@@ -7,73 +7,11 @@
    <style>
    * { box-sizing: border-box; }
 
-   .sr-form-box {
-       background: #fff;
-       border: 1px solid #ccc;
-       margin-bottom: 15px;
-   }
-   .sr-form-box summary {
-       background: #e8e8e8;
-       padding: 8px 12px;
-       cursor: pointer;
-       font-size: 13px;
-       font-weight: bold;
-       color: #333;
-       list-style: none;
-       border-bottom: 1px solid #ccc;
-   }
-   .sr-form-box summary::-webkit-details-marker { display: none; }
-   .sr-form-box summary::before { content: "+ "; color: #666; }
-   .sr-form-box[open] summary::before { content: "- "; }
-
-   .sr-form { padding: 12px; }
-   .sr-form input, .sr-form textarea {
-       width: 100%;
-       padding: 6px 8px;
-       margin-bottom: 8px;
-       border: 1px solid #ccc;
-       font-size: 13px;
-       font-family: Arial, sans-serif;
-       background: #fff;
-       color: #333;
-   }
-   .sr-form textarea { resize: vertical; min-height: 50px; }
-   .sr-form button[type="submit"] {
-       padding: 6px 14px;
-       border: 1px solid #ccc;
-       background: #f0f0f0;
-       font-size: 13px;
-       cursor: pointer;
-       font-family: Arial, sans-serif;
-   }
-   .sr-form button[type="submit"]:hover { background: #e0e0e0; }
-   .sr-form button[type="submit"]:disabled { background: #f5f5f5; color: #999; cursor: not-allowed; }
-
-   .sr-dropzone {
-       border: 2px dashed #ccc;
-       padding: 20px;
-       text-align: center;
-       color: #999;
-       margin-bottom: 8px;
-       font-size: 12px;
-       background: #fafafa;
-   }
-   .sr-dropzone.dragover { border-color: #32CD32; color: #32CD32; background: #f0fff0; }
-
-   .sr-status {
-       color: #c00;
-       font-size: 12px;
-       margin: -4px 0 8px 0;
-       min-height: 16px;
-   }
-
-   /* Product Grid */
    .sr-grid {
        display: grid;
        grid-template-columns: repeat(4, 1fr);
        gap: 15px;
    }
-
    .sr-card {
        background: #fff;
        border: 1px solid #ccc;
@@ -82,7 +20,6 @@
        transition: box-shadow 0.15s;
    }
    .sr-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
    .sr-img-box {
        width: 100%;
        height: 120px;
@@ -98,7 +35,6 @@
        object-fit: contain;
        display: block;
    }
-
    .sr-title {
        font-size: 12px;
        color: #32CD32;
@@ -118,45 +54,12 @@
        font-size: 12px;
        color: #999;
    }
-   .sr-rep {
-       font-size: 9px;
-       text-transform: uppercase;
-       letter-spacing: 0.5px;
-       padding: 1px 6px;
-       border-radius: 3px;
-       border: 1px solid;
-       font-weight: bold;
-   }
    .sr-price {
        font-size: 14px;
        color: #c00;
        margin-top: 8px;
        font-weight: bold;
    }
-   .sr-votes {
-       display: flex;
-       align-items: center;
-       gap: 8px;
-       margin-top: 6px;
-       font-size: 12px;
-   }
-   .sr-votebtn {
-       background: transparent;
-       border: 1px solid #ddd;
-       color: #999;
-       padding: 2px 8px;
-       border-radius: 3px;
-       cursor: pointer;
-       font-size: 12px;
-       font-family: Arial, sans-serif;
-       display: flex;
-       align-items: center;
-       gap: 4px;
-   }
-   .sr-votebtn:hover { border-color: #bbb; color: #666; }
-   .sr-votebtn.up { border-color: #32CD32; color: #32CD32; background: #f0fff0; }
-   .sr-votebtn.down { border-color: #c00; color: #c00; background: #fff0f0; }
-
    .sr-empty {
        color: #999;
        text-align: center;
@@ -164,101 +67,6 @@
        grid-column: 1 / -1;
        font-size: 13px;
    }
-
-   /* Modal */
-   .sr-modal-overlay {
-       display: none;
-       position: fixed;
-       top: 0; left: 0; right: 0; bottom: 0;
-       background: rgba(0,0,0,0.6);
-       z-index: 100;
-       justify-content: center;
-       align-items: center;
-       padding: 20px;
-   }
-   .sr-modal-overlay.active { display: flex; }
-   .sr-modal-box {
-       background: #fff;
-       border: 1px solid #ccc;
-       max-width: 600px;
-       width: 100%;
-       max-height: 90vh;
-       overflow-y: auto;
-       position: relative;
-       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-   }
-   .sr-modal-close {
-       position: absolute;
-       top: 8px; right: 12px;
-       color: #999;
-       font-size: 22px;
-       cursor: pointer;
-       background: none;
-       border: none;
-       line-height: 1;
-   }
-   .sr-modal-close:hover { color: #333; }
-   .sr-modal-img {
-       width: 100%;
-       max-height: 300px;
-       object-fit: contain;
-       background: #eee;
-       display: block;
-   }
-   .sr-modal-content { padding: 15px; }
-   .sr-modal-title {
-       color: #32CD32;
-       font-size: 18px;
-       font-weight: bold;
-       margin-bottom: 6px;
-   }
-   .sr-modal-price {
-       color: #c00;
-       font-size: 16px;
-       font-weight: bold;
-       margin-bottom: 6px;
-   }
-   .sr-modal-meta {
-       color: #666;
-       font-size: 12px;
-       margin-bottom: 12px;
-   }
-   .sr-modal-votes {
-       display: flex;
-       align-items: center;
-       gap: 10px;
-       margin-bottom: 12px;
-       padding: 8px;
-       background: #f5f5f5;
-       border: 1px solid #eee;
-   }
-   .sr-modal-desc {
-       color: #333;
-       font-size: 13px;
-       line-height: 1.5;
-       white-space: pre-wrap;
-       margin-bottom: 15px;
-   }
-   .sr-modal-contact {
-       background: #f0f8ff;
-       border: 1px solid #cce5ff;
-       padding: 12px;
-   }
-   .sr-modal-contact-label {
-       color: #32CD32;
-       font-size: 11px;
-       text-transform: uppercase;
-       letter-spacing: 1px;
-       font-weight: bold;
-       margin-bottom: 6px;
-   }
-   .sr-modal-contact-info {
-       color: #333;
-       font-size: 13px;
-       word-break: break-all;
-   }
-
-   /* Tab Panel */
    .sr-tab-panel {
        background: #fff;
        border: 1px solid #ccc;
@@ -279,6 +87,161 @@
        color: #666;
        font-size: 13px;
        margin: 0 0 10px 0;
+   }
+   .subcat-item {
+       padding: 2px 10px;
+       font-size: 12px;
+       cursor: pointer;
+       color: #32CD32;
+   }
+   .subcat-item:hover {
+       background: #f0f0f0;
+   }
+   .subcat-item.active {
+       background: #e8e8e8;
+       font-weight: bold;
+   }
+
+   /* Multi-image card with arrows */
+   .sr-img-wrap {
+       position: relative;
+       width: 100%;
+       height: 120px;
+       background: #eee;
+       overflow: hidden;
+   }
+   .sr-img-wrap img {
+       position: absolute;
+       top: 0; left: 0;
+       width: 100%;
+       height: 100%;
+       object-fit: contain;
+       opacity: 0;
+       transition: opacity 0.3s;
+   }
+   .sr-img-wrap img.active {
+       opacity: 1;
+   }
+   .sr-img-arrow {
+       position: absolute;
+       top: 50%;
+       transform: translateY(-50%);
+       width: 28px;
+       height: 28px;
+       background: rgba(255,255,255,0.85);
+       border: 1px solid #ccc;
+       border-radius: 3px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       font-size: 14px;
+       color: #333;
+       z-index: 5;
+       user-select: none;
+   }
+   .sr-img-arrow:hover {
+       background: rgba(255,255,255,1);
+       border-color: #999;
+   }
+   .sr-img-arrow.prev { left: 4px; }
+   .sr-img-arrow.next { right: 4px; }
+   .sr-img-arrow.hidden { display: none; }
+   .sr-img-counter {
+       position: absolute;
+       bottom: 4px;
+       right: 6px;
+       background: rgba(0,0,0,0.5);
+       color: white;
+       font-size: 10px;
+       padding: 2px 6px;
+       border-radius: 3px;
+       z-index: 5;
+   }
+
+   /* Product detail modal */
+   .sr-detail-overlay {
+       display: none;
+       position: fixed;
+       top: 0; left: 0; right: 0; bottom: 0;
+       background: rgba(0,0,0,0.5);
+       z-index: 200;
+       justify-content: center;
+       align-items: center;
+       padding: 40px;
+   }
+   .sr-detail-overlay.active { display: flex; }
+   .sr-detail-box {
+       background: #fff;
+       border: 1px solid #ccc;
+       max-width: 500px;
+       width: 100%;
+       max-height: 85vh;
+       overflow-y: auto;
+       position: relative;
+       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+   }
+   .sr-detail-close {
+       position: absolute;
+       top: 8px; left: 10px;
+       color: #999;
+       font-size: 20px;
+       cursor: pointer;
+       background: none;
+       border: none;
+       line-height: 1;
+       z-index: 10;
+       width: 24px;
+       height: 24px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+   }
+   .sr-detail-close:hover { color: #333; }
+   .sr-detail-img-wrap {
+       position: relative;
+       width: 100%;
+       height: 280px;
+       background: #eee;
+       overflow: hidden;
+   }
+   .sr-detail-img-wrap img {
+       position: absolute;
+       top: 0; left: 0;
+       width: 100%;
+       height: 100%;
+       object-fit: contain;
+       opacity: 0;
+       transition: opacity 0.3s;
+   }
+   .sr-detail-img-wrap img.active {
+       opacity: 1;
+   }
+   .sr-detail-content {
+       padding: 15px;
+   }
+   .sr-detail-title {
+       color: #32CD32;
+       font-size: 18px;
+       font-weight: bold;
+       margin-bottom: 6px;
+   }
+   .sr-detail-price {
+       color: #c00;
+       font-size: 16px;
+       font-weight: bold;
+       margin-bottom: 6px;
+   }
+   .sr-detail-meta {
+       color: #666;
+       font-size: 12px;
+       margin-bottom: 12px;
+   }
+   .sr-detail-desc {
+       color: #333;
+       font-size: 13px;
+       line-height: 1.5;
+       margin-bottom: 15px;
    }
 
    @media (max-width: 900px) {
@@ -304,7 +267,6 @@
 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #ccc;">
    <div style="display: flex; align-items: center; gap: 10px;">
      <img src="https://i.ibb.co/1tnncPcB/Silk-Road-Icon.png" style="height: 52px; width: auto; display: block;">
-
        <div>
            <h1 style="font-size: 32px; margin: 0; color: #333;">Silk Road</h1>
            <h3 style="margin: 0; font-size: 12px; font-weight: normal; font-style: italic; color: #666;"><b>anonymous market</b></h3>
@@ -312,8 +274,8 @@
    </div>
    <div style="display: flex; align-items: center; gap: 10px;">
        <span style="font-size: 13px; font-weight: bold; color: #333;">Search</span>
-       <input type="text" style="padding: 4px 8px; border: 1px solid #ccc; border-right: 0; font-size: 13px; width: 250px;">
-       <button style="padding: 4px 12px; border: 1px solid #ccc; background: #f0f0f0; font-size: 13px; cursor: pointer; margin-left: -1px;">Go</button>
+       <input type="text" id="srSearchInput" style="padding: 4px 8px; border: 1px solid #ccc; border-right: 0; font-size: 13px; width: 250px;">
+       <button id="srSearchBtn" style="padding: 4px 12px; border: 1px solid #ccc; background: #f0f0f0; font-size: 13px; cursor: pointer; margin-left: -1px;">Go</button>
    </div>
 </div>
 
@@ -327,444 +289,358 @@
        </div>
        <div id="srSidebar" style="width: 200px; background: #fff; border: 1px solid #ccc; padding: 5px 0; color: #32CD32;">
 
-           <details data-cat="Drugs">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Drugs <span style="color: #999;">8,670</span></summary>
+           <details data-cat="Spore Prints">
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px; cursor: pointer;">Spore Prints <span style="color: #999;">38</span></summary>
                <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Cannabis</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Dissociatives</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Ecstasy</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Opioids</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Prescription</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Psychedelics</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Steroids</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Stimulants</div>
-               </div>
-           </details>
-
-           <details data-cat="Apparel">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Apparel <span style="color: #999;">264</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">T-Shirts</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Hoodies</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Jackets</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Accessories</div>
-               </div>
-           </details>
-
-           <details data-cat="Art">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Art <span style="color: #999;">127</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Paintings</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Sculptures</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Digital Art</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Prints</div>
-               </div>
-           </details>
-
-           <details data-cat="Books">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Books <span style="color: #999;">861</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Fiction</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Non-Fiction</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Textbooks</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Rare Editions</div>
-               </div>
-           </details>
-
-           <details data-cat="Collectables">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Collectables <span style="color: #999;">5</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Coins</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Stamps</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Trading Cards</div>
-               </div>
-           </details>
-
-           <details data-cat="Computer Equipment">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Computer Equipment <span style="color: #999;">32</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Laptops</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Components</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Peripherals</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Networking</div>
-               </div>
-           </details>
-
-           <details data-cat="Custom Orders">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Custom Orders <span style="color: #999;">68</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">3D Printing</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">CNC Work</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Custom PCBs</div>
-               </div>
-           </details>
-
-           <details data-cat="Digital Goods">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Digital Goods <span style="color: #999;">509</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Software</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">E-Books</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Accounts</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Keys</div>
-               </div>
-           </details>
-
-           <details data-cat="Drug Paraphernalia">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Drug Paraphernalia <span style="color: #999;">305</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Pipes</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Grinders</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Scales</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Storage</div>
-               </div>
-           </details>
-
-           <details data-cat="Electronics">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Electronics <span style="color: #999;">77</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Phones</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Tablets</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Cameras</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Audio</div>
-               </div>
-           </details>
-
-           <details data-cat="Erotica">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Erotica <span style="color: #999;">0</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Literature</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Art</div>
-               </div>
-           </details>
-
-           <details data-cat="Fireworks">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Fireworks <span style="color: #999;">2</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Rockets</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Fountains</div>
-               </div>
-           </details>
-
-           <details data-cat="Food">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Food <span style="color: #999;">0</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Snacks</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Specialty</div>
-               </div>
-           </details>
-
-           <details data-cat="Forgeries">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Forgeries <span style="color: #999;">18</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Documents</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Currency</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">IDs</div>
-               </div>
-           </details>
-
-           <details data-cat="Hardware">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Hardware <span style="color: #999;">0</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Tools</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Machinery</div>
-               </div>
-           </details>
-
-           <details data-cat="Herbs & Supplements">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Herbs & Supplements <span style="color: #999;">0</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Vitamins</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Herbal</div>
-               </div>
-           </details>
-
-           <details data-cat="Home & Garden">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Home & Garden <span style="color: #999;">0</span></summary>
-               <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Seeds</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Equipment</div>
+                   <div class="subcat-item" data-subcat="Psilocybe Cubensis">Psilocybe Cubensis</div>
+                   <div class="subcat-item" data-subcat="Psilocybe Exotics">Psilocybe Exotics</div>
+                   <div class="subcat-item" data-subcat="Panaeolus">Panaeolus</div>
+                   <div class="subcat-item" data-subcat="Albino Varieties">Albino Varieties</div>
                </div>
            </details>
 
            <details data-cat="Jewelry">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px;">Jewelry <span style="color: #999;">4</span></summary>
+               <summary style="list-style: none; padding: 2px 10px; font-size: 13px; cursor: pointer;">Jewelry <span style="color: #999;">4</span></summary>
                <div style="padding-left: 15px;">
-                   <div style="padding: 2px 10px; font-size: 12px;">Rings</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Necklaces</div>
-                   <div style="padding: 2px 10px; font-size: 12px;">Watches</div>
+                   <div class="subcat-item" data-subcat="Rings">Rings</div>
+                   <div class="subcat-item" data-subcat="Necklaces">Necklaces</div>
+                   <div class="subcat-item" data-subcat="Watches">Watches</div>
                </div>
            </details>
 
        </div>
    </div>
 
-   <!-- MAIN AREA: Tab Panel + Static Grid -->
+   <!-- MAIN AREA -->
    <div style="flex: 1;">
-
-       <!-- Tab Panel -->
        <div class="sr-tab-panel">
            <div class="sr-tab-header" id="tab-title">Welcome to Silk Road</div>
            <div class="sr-tab-body" id="tab-content">
-               <p>Select a category from the sidebar to browse listings. Clicking a category will open its subcategories and show available items here.</p>
+               <p>Select a category from the sidebar to browse listings.</p>
            </div>
        </div>
-
-
-              <!-- Static Product Grid -->
        <div class="sr-grid" id="srGrid">
            <div class="sr-empty">Select a category to view listings.</div>
        </div>
-
-
-
    </div>
 
 </div>
 
-<script>
-const $ = id => document.getElementById(id);
+<!-- Product Detail Modal -->
+<div class="sr-detail-overlay" id="srDetailOverlay">
+    <div class="sr-detail-box">
+        <button class="sr-detail-close" id="srDetailClose">&#10005;</button>
+        <div class="sr-detail-img-wrap" id="srDetailImgWrap"></div>
+        <div class="sr-detail-content">
+            <div class="sr-detail-title" id="srDetailTitle"></div>
+            <div class="sr-detail-price" id="srDetailPrice"></div>
+            <div class="sr-detail-meta" id="srDetailMeta"></div>
+            <div class="sr-detail-desc" id="srDetailDesc"></div>
+        </div>
+    </div>
+</div>
 
+<script>
 const categoryData = {
-    "Drugs": {
-        title: "Drugs — 8,670 listings",
-        text: "Various substances available from verified vendors.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item A</div><div class="sr-seller-row"><span class="sr-seller">VendorX</span></div><div class="sr-price">฿1.20</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item B</div><div class="sr-seller-row"><span class="sr-seller">VendorY</span></div><div class="sr-price">฿0.80</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item C</div><div class="sr-seller-row"><span class="sr-seller">VendorZ</span></div><div class="sr-price">฿2.50</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sample Item D</div><div class="sr-seller-row"><span class="sr-seller">VendorX</span></div><div class="sr-price">฿1.00</div></div>
-        `
-    },
-    "Apparel": {
-        title: "Apparel — 264 listings",
-        text: "Clothing and fashion accessories.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Tee</div><div class="sr-seller-row"><span class="sr-seller">StyleShop</span></div><div class="sr-price">฿0.30</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Leather Jacket</div><div class="sr-seller-row"><span class="sr-seller">GearHead</span></div><div class="sr-price">฿1.50</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Beanie</div><div class="sr-seller-row"><span class="sr-seller">KnitWit</span></div><div class="sr-price">฿0.15</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sneakers</div><div class="sr-seller-row"><span class="sr-seller">SoleTrade</span></div><div class="sr-price">฿0.90</div></div>
-        `
-    },
-    "Art": {
-        title: "Art — 127 listings",
-        text: "Original works, prints, and digital creations.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Abstract Print</div><div class="sr-seller-row"><span class="sr-seller">Artisan</span></div><div class="sr-price">฿0.45</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Digital Landscape</div><div class="sr-seller-row"><span class="sr-seller">PixelMage</span></div><div class="sr-price">฿0.20</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Bronze Sculpture</div><div class="sr-seller-row"><span class="sr-seller">MetalWorks</span></div><div class="sr-price">฿3.00</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Oil Painting</div><div class="sr-seller-row"><span class="sr-seller">CanvasKing</span></div><div class="sr-price">฿1.80</div></div>
-        `
-    },
-    "Books": {
-        title: "Books — 861 listings",
-        text: "Physical and digital literature.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Rare 1st Edition</div><div class="sr-seller-row"><span class="sr-seller">BookWorm</span></div><div class="sr-price">฿0.60</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Sci-Fi Anthology</div><div class="sr-seller-row"><span class="sr-seller">PageTurner</span></div><div class="sr-price">฿0.25</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Technical Manual</div><div class="sr-seller-row"><span class="sr-seller">TechText</span></div><div class="sr-price">฿0.40</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Philosophy Comp.</div><div class="sr-seller-row"><span class="sr-seller">DeepThink</span></div><div class="sr-price">฿0.35</div></div>
-        `
-    },
-    "Collectables": {
-        title: "Collectables — 5 listings",
-        text: "Rare and unique collectible items.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Coin Set</div><div class="sr-seller-row"><span class="sr-seller">Numisma</span></div><div class="sr-price">฿2.00</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Stamp Collection</div><div class="sr-seller-row"><span class="sr-seller">Philately</span></div><div class="sr-price">฿0.75</div></div>
-        `
-    },
-    "Computer Equipment": {
-        title: "Computer Equipment — 32 listings",
-        text: "Hardware, components, and accessories.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">ThinkPad T420</div><div class="sr-seller-row"><span class="sr-seller">RetroTech</span></div><div class="sr-price">฿0.55</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">DDR3 RAM 8GB</div><div class="sr-seller-row"><span class="sr-seller">MemoryLane</span></div><div class="sr-price">฿0.20</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">SSD 120GB</div><div class="sr-seller-row"><span class="sr-seller">FastStorage</span></div><div class="sr-price">฿0.35</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">WiFi Card</div><div class="sr-seller-row"><span class="sr-seller">NetGear</span></div><div class="sr-price">฿0.15</div></div>
-        `
-    },
-    "Custom Orders": {
-        title: "Custom Orders — 68 listings",
-        text: "Bespoke manufacturing and fabrication services.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">3D Print Service</div><div class="sr-seller-row"><span class="sr-seller">PrintLab</span></div><div class="sr-price">฿0.50</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">CNC Aluminum Part</div><div class="sr-seller-row"><span class="sr-seller">MillMaster</span></div><div class="sr-price">฿1.10</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Custom PCB</div><div class="sr-seller-row"><span class="sr-seller">CircuitPro</span></div><div class="sr-price">฿0.80</div></div>
-        `
-    },
-    "Digital Goods": {
-        title: "Digital Goods — 509 listings",
-        text: "Software, accounts, and digital products.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">VPN Subscription</div><div class="sr-seller-row"><span class="sr-seller">SecureNet</span></div><div class="sr-price">฿0.10</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Game Key</div><div class="sr-seller-row"><span class="sr-seller">KeyMaster</span></div><div class="sr-price">฿0.30</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">E-Book Bundle</div><div class="sr-seller-row"><span class="sr-seller">DigiLib</span></div><div class="sr-price">฿0.15</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Software License</div><div class="sr-seller-row"><span class="sr-seller">CodeVault</span></div><div class="sr-price">฿0.25</div></div>
-        `
-    },
-    "Drug Paraphernalia": {
-        title: "Drug Paraphernalia — 305 listings",
-        text: "Accessories and tools.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Glass Pipe</div><div class="sr-seller-row"><span class="sr-seller">SmokeShop</span></div><div class="sr-price">฿0.20</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Precision Scale</div><div class="sr-seller-row"><span class="sr-seller">WeighIt</span></div><div class="sr-price">฿0.35</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Herb Grinder</div><div class="sr-seller-row"><span class="sr-seller">GrindHouse</span></div><div class="sr-price">฿0.18</div></div>
-        `
-    },
-    "Electronics": {
-        title: "Electronics — 77 listings",
-        text: "Consumer electronics and gadgets.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Smartphone</div><div class="sr-seller-row"><span class="sr-seller">PhoneDealer</span></div><div class="sr-price">฿1.20</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Action Camera</div><div class="sr-seller-row"><span class="sr-seller">CamPro</span></div><div class="sr-price">฿0.90</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Headphones</div><div class="sr-seller-row"><span class="sr-seller">SoundWave</span></div><div class="sr-price">฿0.45</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Tablet</div><div class="sr-seller-row"><span class="sr-seller">TabStore</span></div><div class="sr-price">฿0.85</div></div>
-        `
-    },
-    "Erotica": {
-        title: "Erotica — 0 listings",
-        text: "No active listings in this category.",
-        grid: `<div class="sr-empty">No listings available.</div>`
-    },
-    "Fireworks": {
-        title: "Fireworks — 2 listings",
-        text: "Pyrotechnics and displays.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Rocket Pack</div><div class="sr-seller-row"><span class="sr-seller">BoomShop</span></div><div class="sr-price">฿0.40</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Fountain Set</div><div class="sr-seller-row"><span class="sr-seller">Sparkle</span></div><div class="sr-price">฿0.25</div></div>
-        `
-    },
-    "Food": {
-        title: "Food — 0 listings",
-        text: "No active listings in this category.",
-        grid: `<div class="sr-empty">No listings available.</div>`
-    },
-    "Forgeries": {
-        title: "Forgeries — 18 listings",
-        text: "Replica documents and items.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Replica Diploma</div><div class="sr-seller-row"><span class="sr-seller">PaperTrail</span></div><div class="sr-price">฿0.50</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Novelty ID</div><div class="sr-seller-row"><span class="sr-seller">IDForge</span></div><div class="sr-price">฿0.60</div></div>
-        `
-    },
-    "Hardware": {
-        title: "Hardware — 0 listings",
-        text: "No active listings in this category.",
-        grid: `<div class="sr-empty">No listings available.</div>`
-    },
-    "Herbs & Supplements": {
-        title: "Herbs & Supplements — 0 listings",
-        text: "No active listings in this category.",
-        grid: `<div class="sr-empty">No listings available.</div>`
-    },
-    "Home & Garden": {
-        title: "Home & Garden — 0 listings",
-        text: "No active listings in this category.",
-        grid: `<div class="sr-empty">No listings available.</div>`
-    },
-    "Jewelry": {
-        title: "Jewelry — 4 listings",
-        text: "Rings, necklaces, and precious items.",
-        grid: `
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Silver Ring</div><div class="sr-seller-row"><span class="sr-seller">GemHunter</span></div><div class="sr-price">฿0.70</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Vintage Watch</div><div class="sr-seller-row"><span class="sr-seller">TimeKeep</span></div><div class="sr-price">฿1.50</div></div>
-            <div class="sr-card"><div class="sr-img-box" style="background:#ddd;"></div><div class="sr-title">Gold Chain</div><div class="sr-seller-row"><span class="sr-seller">BlingKing</span></div><div class="sr-price">฿2.00</div></div>
-        `
-    }
+"Spore Prints": {
+    title: "Spore Prints — For Microscopy Only",
+    text: "All spore prints are sold for microscopy and research purposes only. Not for cultivation.",
+    items: [
+        { title: "Amazonian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/qYDmRz4q/amazonian1.webp"] },
+        { title: "Argentina", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/hSrPpkH/cubensis-argentina.webp"] },
+        { title: "Australian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/1GYbVyDy/cubensis-australian.webp"] },
+        { title: "Avery Albino", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/vCHW5xn5/Cubensis-Avery-Albino.webp"] },
+        { title: "Ban Hua Thai", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/fd3tz3gw/Cubensis-ban-hua-thai.webp"] },
+        { title: "Ban Thurian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/Rk1H70nb/Cubensis-Ban-Thurian.webp"] },
+        { title: "Blue Meanie", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.13", images: ["https://i.ibb.co/BHYQZ2vF/Cubensis-Blue-Meanie.webp"] },
+        { title: "Bluey Vuitton", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/5gc03h0Z/Cubensis-Bluey-Vuitton.webp"] },
+        { title: "B+", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/t5kzyK2/cubensis-b-plus.webp"] },
+        { title: "B+ AKM 2", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/Qvt9hY1R/Cubensis-B-plus-Akm-2.webp"] },
+        { title: "Brasil", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/PsLGvX7H/cubensis-brasil.webp", "https://i.ibb.co/xtVVjTdN/brasil.webp"] },
+        { title: "Cambodian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/7xRjrK5h/cubensis-cambodian.webp"] },
+        { title: "Lizard King", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.13", images: ["https://i.ibb.co/5g8xP0t6/Cubensis-Lizard-King.webp"] },
+        { title: "Teonanacatl", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/bR5Pkdt2/cubensis-teonanacalt.webp"] },
+        { title: "Thai", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/5XfkpQ2p/cubensis-thai.webp"] },
+        { title: "Koh Samui Super Strain", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/27vgRFbZ/Cubensis-thai-koh-samui-super-strain.webp"] },
+        { title: "Arenal Volcano", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/6cWM5Dp8/Cubensis-Arenal-Volcano.webp"] },
+        { title: "Albino A", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-A.webp"] },
+        { title: "Albino ODPE x Shakti", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.18", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-ODPE-x-Shakti.webp"] },
+        { title: "APE Revert", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/NdPmRk2m/Cubensis-APE-Revert.webp"] },
+        { title: "Panaeolus Tropicalis", subcat: "Panaeolus", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/DHdmWpzt/Panaeolus-Tropicalis-II.webp"] },
+        { title: "Psilocybe Atlantis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/vx3YJDmq/Psilocybe-Atlantis.webp"] },
+        { title: "Psilocybe Azurescens", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.17", images: ["https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp", "https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp"] },
+        { title: "Psilocybe Cyanescens", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/rRG13RDL/Psilocybe-Cyanescens.webp"] },
+        { title: "Psilocybe Hispanica", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/F4N8wzMC/Psilocybe-Hispanica.webp"] },
+        { title: "Psilocybe Mexicana Rancho Agosto", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/KpdxDXRN/Psilocybe-Mexicana-Rancho-Agosto.webp"] },
+        { title: "Psilocybe Natalensis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/spYTPk6v/Psilocybe-Natalensis.webp"] },
+        { title: "Psilocybe Ovoideocystidiata", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/SXXZFxkV/Psilocybe-Ovoideocystidiata.webp"] },
+        { title: "Psilocybe Papuana", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/YB6s7K7S/Psilocybe-Papuana.webp"] },
+        { title: "Psilocybe Pseudozapotecorum", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/Fkmdvyms/Psilocybe-Pseudozapotecorum.webp"] },
+        { title: "Psilocybe Serbica", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/gMBr5RMJ/Psilocybe-Serbica.webp", "https://i.ibb.co/GfRzNTPr/Psilocybe-Serbica-2.webp"] },
+        { title: "Psilocybe Subaeruginosa", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/TqxD3NNM/Psilocybe-Subaeruginosa.webp"] },
+        { title: "Psilocybe Subsecotioides", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/cMxnB94/Psilocybe-Subsecotioides.webp"] },
+        { title: "Psilocybe Tampanensis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/RGrbv161/Psilocybe-Tampanensis.webp", "https://i.ibb.co/QjmL4n2W/Psilocybe-Tampanensis-2.webp"] },
+        { title: "Tampanensis Beulah", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/prhsNHRy/Tampanensis-Beulah.webp"] }
+    ]
+},
+"Jewelry": {
+    title: "Jewelry — 4 listings",
+    text: "Rings, necklaces, and precious items.",
+    items: [
+        { title: "Silver Ring", subcat: "Rings", seller: "GemHunter", price: "฿0.70", images: [] },
+        { title: "Vintage Watch", subcat: "Watches", seller: "TimeKeep", price: "฿1.50", images: [] },
+        { title: "Gold Chain", subcat: "Necklaces", seller: "BlingKing", price: "฿2.00", images: [] }
+    ]
+}
 };
 
-const allDetails = document.querySelectorAll('#srSidebar details');
+let currentDetailItem = null;
+let currentDetailImgIdx = 0;
 
-allDetails.forEach((targetDetail) => {
-    targetDetail.addEventListener("click", () => {
-        const cat = targetDetail.getAttribute('data-cat');
-        const data = categoryData[cat];
-
-        if (data) {
-            $('tab-title').textContent = data.title;
-            $('tab-content').innerHTML = '<p>' + data.text + '</p>';
-            $('srGrid').innerHTML = data.grid;
+function renderCard(item, idx) {
+    const hasImages = item.images && item.images.length > 0;
+    let imgHtml = '';
+    
+    if (hasImages) {
+        if (item.images.length === 1) {
+            imgHtml = `<div class="sr-img-box"><img src="${item.images[0]}" alt="${esc(item.title)}" onerror="this.parentElement.style.display='none'"></div>`;
+        } else {
+            const imgs = item.images.map((src, i) => 
+                `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(item.title)}" onerror="this.style.display='none'">`
+            ).join('');
+            imgHtml = `
+                <div class="sr-img-wrap" id="imgwrap-${idx}">
+                    ${imgs}
+                    <div class="sr-img-arrow prev hidden" id="arrow-prev-${idx}" onclick="cardArrow(event, ${idx}, -1)">&#9664;</div>
+                    <div class="sr-img-arrow next" id="arrow-next-${idx}" onclick="cardArrow(event, ${idx}, 1)">&#9654;</div>
+                    <div class="sr-img-counter">1 / ${item.images.length}</div>
+                </div>
+            `;
         }
+    } else {
+        imgHtml = `<div class="sr-img-box" style="background:#ddd;"></div>`;
+    }
+    
+    return `
+        <div class="sr-card" data-subcat="${esc(item.subcat || '')}" onclick="openDetail(${idx})">
+            ${imgHtml}
+            <div class="sr-title">${esc(item.title)}</div>
+            <div class="sr-seller-row"><span class="sr-seller">${esc(item.seller || 'Anonymous')}</span></div>
+            <div class="sr-price">${esc(item.price || 'No price')}</div>
+        </div>
+    `;
+}
 
-        allDetails.forEach((detail) => {
-            if (detail !== targetDetail) {
-                detail.removeAttribute("open");
-            }
-        });
+function cardArrow(e, cardIdx, dir) {
+    e.stopPropagation();
+    const wrap = document.getElementById('imgwrap-' + cardIdx);
+    if (!wrap) return;
+    const imgs = wrap.querySelectorAll('img');
+    const total = imgs.length;
+    let current = 0;
+    imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
+    
+    let next = current + dir;
+    if (next < 0) next = total - 1;
+    if (next >= total) next = 0;
+    
+    imgs.forEach((img, i) => img.classList.toggle('active', i === next));
+    
+    const prevArrow = document.getElementById('arrow-prev-' + cardIdx);
+    const nextArrow = document.getElementById('arrow-next-' + cardIdx);
+    const counter = wrap.querySelector('.sr-img-counter');
+    
+    if (total <= 1) {
+        if (prevArrow) prevArrow.classList.add('hidden');
+        if (nextArrow) nextArrow.classList.add('hidden');
+    } else {
+        if (prevArrow) prevArrow.classList.remove('hidden');
+        if (nextArrow) nextArrow.classList.remove('hidden');
+    }
+    if (counter) counter.textContent = (next + 1) + ' / ' + total;
+}
+
+function renderGrid(items) {
+    if (!items || items.length === 0) {
+        return '<div class="sr-empty">No listings in this subcategory.</div>';
+    }
+    return items.map((item, i) => renderCard(item, i)).join('');
+}
+
+function showCategory(cat, subcat) {
+    const data = categoryData[cat];
+    if (!data) return;
+    
+    let items = data.items;
+    if (subcat) {
+        items = items.filter(item => item.subcat === subcat);
+    }
+    
+    document.getElementById('tab-title').textContent = subcat ? cat + ' — ' + subcat : data.title;
+    document.getElementById('tab-content').innerHTML = '<p>' + esc(data.text) + '</p>';
+    document.getElementById('srGrid').innerHTML = renderGrid(items);
+}
+
+// ===== EVENT HANDLERS =====
+
+const allDetails = document.querySelectorAll('#srSidebar details');
+allDetails.forEach((detail) => {
+    detail.addEventListener('toggle', function() {
+        if (this.open) {
+            const cat = this.getAttribute('data-cat');
+            allDetails.forEach(d => { if (d !== this) d.removeAttribute('open'); });
+            showCategory(cat, null);
+            this.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
+        }
     });
 });
 
+document.querySelectorAll('.subcat-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const subcat = this.getAttribute('data-subcat');
+        const parent = this.closest('details');
+        const cat = parent.getAttribute('data-cat');
+        
+        parent.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        
+        showCategory(cat, subcat);
+    });
+});
 
+// ===== DETAIL MODAL =====
 
+function openDetail(idx) {
+    const cards = document.querySelectorAll('.sr-card');
+    if (!cards[idx]) return;
+    
+    const title = cards[idx].querySelector('.sr-title').textContent;
+    let foundItem = null;
+    for (const cat in categoryData) {
+        const match = categoryData[cat].items.find(it => it.title === title);
+        if (match) { foundItem = match; break; }
+    }
+    if (!foundItem) return;
+    
+    currentDetailItem = foundItem;
+    currentDetailImgIdx = 0;
+    
+    document.getElementById('srDetailTitle').textContent = foundItem.title;
+    document.getElementById('srDetailPrice').textContent = foundItem.price || 'No price';
+    document.getElementById('srDetailMeta').innerHTML = 'Sold by <span style="color:#32CD32;font-weight:bold;">' + esc(foundItem.seller || 'Anonymous') + '</span> — ' + esc(foundItem.subcat || '');
+    document.getElementById('srDetailDesc').textContent = 'For microscopy and research purposes only. Spore prints are sold as-is with no guarantees. Handle with care.';
+    
+    const wrap = document.getElementById('srDetailImgWrap');
+    if (foundItem.images && foundItem.images.length > 0) {
+        const imgs = foundItem.images.map((src, i) => 
+            `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(foundItem.title)}" onerror="this.style.display='none'">`
+        ).join('');
+        const prevClass = foundItem.images.length > 1 ? '' : 'hidden';
+        const nextClass = foundItem.images.length > 1 ? '' : 'hidden';
+        wrap.innerHTML = imgs + `
+            <div class="sr-img-arrow prev ${prevClass}" onclick="detailArrow(-1)">&#9664;</div>
+            <div class="sr-img-arrow next ${nextClass}" onclick="detailArrow(1)">&#9654;</div>
+            <div class="sr-img-counter" id="detailCounter">1 / ${foundItem.images.length}</div>
+        `;
+    } else {
+        wrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;">No image</div>';
+    }
+    
+    document.getElementById('srDetailOverlay').classList.add('active');
+}
 
+function detailArrow(dir) {
+    if (!currentDetailItem || !currentDetailItem.images) return;
+    const total = currentDetailItem.images.length;
+    currentDetailImgIdx += dir;
+    if (currentDetailImgIdx < 0) currentDetailImgIdx = total - 1;
+    if (currentDetailImgIdx >= total) currentDetailImgIdx = 0;
+    
+    const wrap = document.getElementById('srDetailImgWrap');
+    const imgs = wrap.querySelectorAll('img');
+    imgs.forEach((img, i) => img.classList.toggle('active', i === currentDetailImgIdx));
+    document.getElementById('detailCounter').textContent = (currentDetailImgIdx + 1) + ' / ' + total;
+}
 
+document.getElementById('srDetailClose').addEventListener('click', function() {
+    document.getElementById('srDetailOverlay').classList.remove('active');
+});
 
+document.getElementById('srDetailOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        document.getElementById('srDetailOverlay').classList.remove('active');
+    }
+});
 
-
-
-// ===== SEARCH FEATURE =====
-const srSearchInput = document.querySelector('input[type="text"]');
-const srSearchBtn = document.querySelector('button');
-const srGrid = document.getElementById('srGrid');
-let srOriginalGrid = srGrid.innerHTML;
+// ===== SEARCH =====
+const srSearchInput = document.getElementById('srSearchInput');
+const srSearchBtn = document.getElementById('srSearchBtn');
+let srOriginalGrid = '';
 
 function srDoSearch() {
     const query = srSearchInput.value.trim().toLowerCase();
     if (!query) {
-        srGrid.innerHTML = srOriginalGrid;
+        document.getElementById('srGrid').innerHTML = srOriginalGrid;
         document.getElementById('tab-title').textContent = 'Welcome to Silk Road';
         document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
-        document.querySelectorAll('#srSidebar details').forEach(d => d.removeAttribute('open'));
+        allDetails.forEach(d => d.removeAttribute('open'));
         return;
     }
     
-    // Collect all matching cards and track which category they belong to
     const allCards = [];
     let firstMatchCat = null;
+    let firstMatchSubcat = null;
     
     for (const cat in categoryData) {
-        const div = document.createElement('div');
-        div.innerHTML = categoryData[cat].grid;
-        const cards = div.querySelectorAll('.sr-card');
-        cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
+        const data = categoryData[cat];
+        data.items.forEach(item => {
+            const text = (item.title + ' ' + item.subcat + ' ' + item.seller).toLowerCase();
             if (text.includes(query)) {
-                allCards.push(card.outerHTML);
-                if (!firstMatchCat) firstMatchCat = cat;
+                allCards.push(item);
+                if (!firstMatchCat) {
+                    firstMatchCat = cat;
+                    firstMatchSubcat = item.subcat;
+                }
             }
         });
     }
     
     if (allCards.length === 0) {
-        srGrid.innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
+        document.getElementById('srGrid').innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
         document.getElementById('tab-title').textContent = 'Search Results';
         document.getElementById('tab-content').innerHTML = '<p>No matches.</p>';
-        document.querySelectorAll('#srSidebar details').forEach(d => d.removeAttribute('open'));
+        allDetails.forEach(d => d.removeAttribute('open'));
     } else {
-        srGrid.innerHTML = allCards.join('');
-        // Switch sidebar to the category of the first match
-        document.querySelectorAll('#srSidebar details').forEach(d => {
+        document.getElementById('srGrid').innerHTML = renderGrid(allCards);
+        allDetails.forEach(d => {
             if (d.getAttribute('data-cat') === firstMatchCat) {
                 d.setAttribute('open', '');
+                d.querySelectorAll('.subcat-item').forEach(s => {
+                    s.classList.toggle('active', s.getAttribute('data-subcat') === firstMatchSubcat);
+                });
             } else {
                 d.removeAttribute('open');
             }
         });
-        // Update tab to show that category's info
-        const data = categoryData[firstMatchCat];
-        document.getElementById('tab-title').textContent = data.title;
-        document.getElementById('tab-content').innerHTML = '<p>' + data.text + '</p>';
+        document.getElementById('tab-title').textContent = 'Search: "' + esc(query) + '" — ' + firstMatchCat;
+        document.getElementById('tab-content').innerHTML = '<p>Found ' + allCards.length + ' listing(s) in ' + esc(firstMatchSubcat || 'all subcategories') + '.</p>';
     }
 }
 
-srSearchBtn.onclick = function() { srDoSearch(); };
-srSearchInput.onkeypress = function(e) { if(e.key === 'Enter') srDoSearch(); };
+srSearchBtn.addEventListener('click', srDoSearch);
+srSearchInput.addEventListener('keypress', function(e) { if(e.key === 'Enter') srDoSearch(); });
 
 window.addEventListener('load', function() {
-    srOriginalGrid = srGrid.innerHTML;
+    srOriginalGrid = document.getElementById('srGrid').innerHTML;
 });
 
-
+function esc(s) {
+    if (s == null) return '';
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
 </script>
 
 </body>
