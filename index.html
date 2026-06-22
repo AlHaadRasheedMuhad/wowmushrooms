@@ -244,12 +244,24 @@
        margin-bottom: 15px;
    }
 
-   @media (max-width: 900px) {
-       .sr-grid { grid-template-columns: repeat(2, 1fr); }
-   }
-   @media (max-width: 500px) {
-       .sr-grid { grid-template-columns: 1fr; }
-   }
+@media (max-width: 1100px) {
+    .sr-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 800px) {
+    .sr-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 450px) {
+    .sr-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+    .sr-main {
+        flex-direction: column !important;
+    }
+    #srSidebar {
+        width: 100% !important;
+    }
+}
    </style>
 </head>
 <body style="background: #f5f5f5; font-family: Arial, sans-serif; padding: 20px; margin: 0;">
@@ -280,7 +292,7 @@
 </div>
 
 <!-- Main content -->
-<div style="display: flex; gap: 20px;">
+<div class="sr-main" style="display: flex; gap: 20px;"></div>
 
    <!-- Sidebar -->
    <div style="flex-shrink: 0;">
