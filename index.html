@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Silk Road</title>
+   <title>Spore Road</title>
    <style>
    * { box-sizing: border-box; }
 
@@ -102,7 +102,6 @@
        font-weight: bold;
    }
 
-   /* Multi-image card with arrows */
    .sr-img-wrap {
        position: relative;
        width: 100%;
@@ -159,7 +158,6 @@
        z-index: 5;
    }
 
-   /* Product detail modal */
    .sr-detail-overlay {
        display: none;
        position: fixed;
@@ -279,8 +277,8 @@
    <div style="display: flex; align-items: center; gap: 10px;">
      <img src="https://i.ibb.co/1tnncPcB/Silk-Road-Icon.png" style="height: 52px; width: auto; display: block;">
        <div>
-           <h1 style="font-size: 32px; margin: 0; color: #333;">Silk Road</h1>
-           <h3 style="margin: 0; font-size: 12px; font-weight: normal; font-style: italic; color: #666;"><b>anonymous market</b></h3>
+           <h1 style="font-size: 32px; margin: 0; color: #333;">Spore Road</h1>
+           <h3 style="margin: 0; font-size: 12px; font-weight: normal; font-style: italic; color: #666;"><b>spore catalog</b></h3>
        </div>
    </div>
    <div style="display: flex; align-items: center; gap: 10px;">
@@ -324,15 +322,29 @@
 
    <!-- MAIN AREA -->
    <div style="flex: 1;">
+
        <div class="sr-tab-panel">
-           <div class="sr-tab-header" id="tab-title">Welcome to Silk Road</div>
+           <div class="sr-tab-header" id="tab-title">Featured — Psilocybe Azurescens</div>
            <div class="sr-tab-body" id="tab-content">
-               <p>Select a category from the sidebar to browse listings.</p>
+               <p>For microscopy and research purposes only. One of the most potent species in the world.</p>
            </div>
        </div>
+
        <div class="sr-grid" id="srGrid">
-           <div class="sr-empty">Select a category to view listings.</div>
+           <div class="sr-card" onclick="showDetailModal(categoryData['Spore Prints'].items[22])">
+               <div class="sr-img-wrap" id="imgwrap-featured">
+                   <img src="https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp" class="active" alt="Psilocybe Azurescens">
+                   <img src="https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp" alt="Psilocybe Azurescens">
+                   <div class="sr-img-arrow prev hidden" id="arrow-prev-featured" onclick="event.stopPropagation(); cardArrow(event, 'featured', -1)">&#9664;</div>
+                   <div class="sr-img-arrow next" id="arrow-next-featured" onclick="event.stopPropagation(); cardArrow(event, 'featured', 1)">&#9654;</div>
+                   <div class="sr-img-counter">1 / 2</div>
+               </div>
+               <div class="sr-title">Psilocybe Azurescens</div>
+               <div class="sr-seller-row"><span class="sr-seller">Not in Stock</span></div>
+               <div class="sr-price">฿0.17</div>
+           </div>
        </div>
+
    </div>
 
 </div>
@@ -354,48 +366,48 @@
 <script>
 const categoryData = {
 "Spore Prints": {
-    title: "Spore Prints — For Microscopy Only",
-    text: "All spore prints are sold for microscopy and research purposes only. Not for cultivation.",
+    title: "Spore Prints ",
+    text: "All spore prints are sold for microscopy and research purposes only.",
     items: [
-        { title: "Amazonian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/qYDmRz4q/amazonian1.webp"] },
-        { title: "Argentina", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/hSrPpkH/cubensis-argentina.webp"] },
-        { title: "Australian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/1GYbVyDy/cubensis-australian.webp"] },
-        { title: "Avery Albino", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/vCHW5xn5/Cubensis-Avery-Albino.webp"] },
-        { title: "Ban Hua Thai", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/fd3tz3gw/Cubensis-ban-hua-thai.webp"] },
-        { title: "Ban Thurian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/Rk1H70nb/Cubensis-Ban-Thurian.webp"] },
-        { title: "Blue Meanie", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.13", images: ["https://i.ibb.co/BHYQZ2vF/Cubensis-Blue-Meanie.webp"] },
-        { title: "Bluey Vuitton", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/5gc03h0Z/Cubensis-Bluey-Vuitton.webp"] },
-        { title: "B+", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/t5kzyK2/cubensis-b-plus.webp"] },
-        { title: "B+ AKM 2", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/Qvt9hY1R/Cubensis-B-plus-Akm-2.webp"] },
-        { title: "Brasil", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/PsLGvX7H/cubensis-brasil.webp", "https://i.ibb.co/xtVVjTdN/brasil.webp"] },
-        { title: "Cambodian", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/7xRjrK5h/cubensis-cambodian.webp"] },
-        { title: "Lizard King", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.13", images: ["https://i.ibb.co/5g8xP0t6/Cubensis-Lizard-King.webp"] },
-        { title: "Teonanacatl", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.11", images: ["https://i.ibb.co/bR5Pkdt2/cubensis-teonanacalt.webp"] },
-        { title: "Thai", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.10", images: ["https://i.ibb.co/5XfkpQ2p/cubensis-thai.webp"] },
-        { title: "Koh Samui Super Strain", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/27vgRFbZ/Cubensis-thai-koh-samui-super-strain.webp"] },
-        { title: "Arenal Volcano", subcat: "Psilocybe Cubensis", seller: "wowmushrooms", price: "฿0.12", images: ["https://i.ibb.co/6cWM5Dp8/Cubensis-Arenal-Volcano.webp"] },
-        { title: "Albino A", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-A.webp"] },
-        { title: "Albino ODPE x Shakti", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.18", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-ODPE-x-Shakti.webp"] },
-        { title: "APE Revert", subcat: "Albino Varieties", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/NdPmRk2m/Cubensis-APE-Revert.webp"] },
-        { title: "Panaeolus Tropicalis", subcat: "Panaeolus", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/DHdmWpzt/Panaeolus-Tropicalis-II.webp"] },
-        { title: "Psilocybe Atlantis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/vx3YJDmq/Psilocybe-Atlantis.webp"] },
-        { title: "Psilocybe Azurescens", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.17", images: ["https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp", "https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp"] },
-        { title: "Psilocybe Cyanescens", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/rRG13RDL/Psilocybe-Cyanescens.webp"] },
-        { title: "Psilocybe Hispanica", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/F4N8wzMC/Psilocybe-Hispanica.webp"] },
-        { title: "Psilocybe Mexicana Rancho Agosto", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/KpdxDXRN/Psilocybe-Mexicana-Rancho-Agosto.webp"] },
-        { title: "Psilocybe Natalensis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/spYTPk6v/Psilocybe-Natalensis.webp"] },
-        { title: "Psilocybe Ovoideocystidiata", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/SXXZFxkV/Psilocybe-Ovoideocystidiata.webp"] },
-        { title: "Psilocybe Papuana", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/YB6s7K7S/Psilocybe-Papuana.webp"] },
-        { title: "Psilocybe Pseudozapotecorum", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/Fkmdvyms/Psilocybe-Pseudozapotecorum.webp"] },
-        { title: "Psilocybe Serbica", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/gMBr5RMJ/Psilocybe-Serbica.webp", "https://i.ibb.co/GfRzNTPr/Psilocybe-Serbica-2.webp"] },
-        { title: "Psilocybe Subaeruginosa", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.16", images: ["https://i.ibb.co/TqxD3NNM/Psilocybe-Subaeruginosa.webp"] },
-        { title: "Psilocybe Subsecotioides", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.14", images: ["https://i.ibb.co/cMxnB94/Psilocybe-Subsecotioides.webp"] },
-        { title: "Psilocybe Tampanensis", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/RGrbv161/Psilocybe-Tampanensis.webp", "https://i.ibb.co/QjmL4n2W/Psilocybe-Tampanensis-2.webp"] },
-        { title: "Tampanensis Beulah", subcat: "Psilocybe Exotics", seller: "wowmushrooms", price: "฿0.15", images: ["https://i.ibb.co/prhsNHRy/Tampanensis-Beulah.webp"] }
+        { title: "Amazonian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/qYDmRz4q/amazonian1.webp"] },
+        { title: "Argentina", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/hSrPpkH/cubensis-argentina.webp"] },
+        { title: "Australian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/1GYbVyDy/cubensis-australian.webp"] },
+        { title: "Avery Albino", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/vCHW5xn5/Cubensis-Avery-Albino.webp"] },
+        { title: "Ban Hua Thai", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/fd3tz3gw/Cubensis-ban-hua-thai.webp"] },
+        { title: "Ban Thurian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/Rk1H70nb/Cubensis-Ban-Thurian.webp"] },
+        { title: "Blue Meanie", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.13", images: ["https://i.ibb.co/BHYQZ2vF/Cubensis-Blue-Meanie.webp"] },
+        { title: "Bluey Vuitton", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/5gc03h0Z/Cubensis-Bluey-Vuitton.webp"] },
+        { title: "B+", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/t5kzyK2/cubensis-b-plus.webp"] },
+        { title: "B+ AKM 2", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/Qvt9hY1R/Cubensis-B-plus-Akm-2.webp"] },
+        { title: "Brasil", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/PsLGvX7H/cubensis-brasil.webp", "https://i.ibb.co/xtVVjTdN/brasil.webp"] },
+        { title: "Cambodian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/7xRjrK5h/cubensis-cambodian.webp"] },
+        { title: "Lizard King", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.13", images: ["https://i.ibb.co/5g8xP0t6/Cubensis-Lizard-King.webp"] },
+        { title: "Teonanacatl", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/bR5Pkdt2/cubensis-teonanacalt.webp"] },
+        { title: "Thai", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/5XfkpQ2p/cubensis-thai.webp"] },
+        { title: "Koh Samui Super Strain", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/27vgRFbZ/Cubensis-thai-koh-samui-super-strain.webp"] },
+        { title: "Arenal Volcano", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/6cWM5Dp8/Cubensis-Arenal-Volcano.webp"] },
+        { title: "Albino A", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-A.webp"] },
+        { title: "Albino ODPE x Shakti", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.18", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-ODPE-x-Shakti.webp"] },
+        { title: "APE Revert", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/NdPmRk2m/Cubensis-APE-Revert.webp"] },
+        { title: "Panaeolus Tropicalis", subcat: "Panaeolus", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/DHdmWpzt/Panaeolus-Tropicalis-II.webp"] },
+        { title: "Psilocybe Atlantis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/vx3YJDmq/Psilocybe-Atlantis.webp"] },
+        { title: "Psilocybe Azurescens", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.17", images: ["https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp", "https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp"] },
+        { title: "Psilocybe Cyanescens", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/rRG13RDL/Psilocybe-Cyanescens.webp"] },
+        { title: "Psilocybe Hispanica", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/F4N8wzMC/Psilocybe-Hispanica.webp"] },
+        { title: "Psilocybe Mexicana Rancho Agosto", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/KpdxDXRN/Psilocybe-Mexicana-Rancho-Agosto.webp"] },
+        { title: "Psilocybe Natalensis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/spYTPk6v/Psilocybe-Natalensis.webp"] },
+        { title: "Psilocybe Ovoideocystidiata", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/SXXZFxkV/Psilocybe-Ovoideocystidiata.webp"] },
+        { title: "Psilocybe Papuana", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/YB6s7K7S/Psilocybe-Papuana.webp"] },
+        { title: "Psilocybe Pseudozapotecorum", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/Fkmdvyms/Psilocybe-Pseudozapotecorum.webp"] },
+        { title: "Psilocybe Serbica", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/gMBr5RMJ/Psilocybe-Serbica.webp", "https://i.ibb.co/GfRzNTPr/Psilocybe-Serbica-2.webp"] },
+        { title: "Psilocybe Subaeruginosa", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/TqxD3NNM/Psilocybe-Subaeruginosa.webp"] },
+        { title: "Psilocybe Subsecotioides", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/cMxnB94/Psilocybe-Subsecotioides.webp"] },
+        { title: "Psilocybe Tampanensis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/RGrbv161/Psilocybe-Tampanensis.webp", "https://i.ibb.co/QjmL4n2W/Psilocybe-Tampanensis-2.webp"] },
+        { title: "Tampanensis Beulah", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/prhsNHRy/Tampanensis-Beulah.webp"] }
     ]
 },
 "Jewelry": {
-    title: "Jewelry — 4 listings",
+    title: "Jewelry — 3 listings",
     text: "Rings, necklaces, and precious items.",
     items: [
         { title: "Silver Ring", subcat: "Rings", seller: "GemHunter", price: "฿0.70", images: [] },
@@ -407,6 +419,7 @@ const categoryData = {
 
 let currentDetailItem = null;
 let currentDetailImgIdx = 0;
+let currentGridItems = [];
 
 function renderCard(item, idx) {
     const hasImages = item.images && item.images.length > 0;
@@ -487,12 +500,11 @@ function showCategory(cat, subcat) {
         items = items.filter(item => item.subcat === subcat);
     }
     
+    currentGridItems = items;
     document.getElementById('tab-title').textContent = subcat ? cat + ' — ' + subcat : data.title;
     document.getElementById('tab-content').innerHTML = '<p>' + esc(data.text) + '</p>';
     document.getElementById('srGrid').innerHTML = renderGrid(items);
 }
-
-// ===== EVENT HANDLERS =====
 
 const allDetails = document.querySelectorAll('#srSidebar details');
 allDetails.forEach((detail) => {
@@ -520,26 +532,19 @@ document.querySelectorAll('.subcat-item').forEach(item => {
     });
 });
 
-// ===== DETAIL MODAL =====
-
 function openDetail(idx) {
-    const cards = document.querySelectorAll('.sr-card');
-    if (!cards[idx]) return;
-    
-    const title = cards[idx].querySelector('.sr-title').textContent;
-    let foundItem = null;
-    for (const cat in categoryData) {
-        const match = categoryData[cat].items.find(it => it.title === title);
-        if (match) { foundItem = match; break; }
-    }
-    if (!foundItem) return;
-    
+    const item = currentGridItems[idx];
+    if (!item) return;
+    showDetailModal(item);
+}
+
+function showDetailModal(foundItem) {
     currentDetailItem = foundItem;
     currentDetailImgIdx = 0;
     
     document.getElementById('srDetailTitle').textContent = foundItem.title;
     document.getElementById('srDetailPrice').textContent = foundItem.price || 'No price';
-    document.getElementById('srDetailMeta').innerHTML = 'Sold by <span style="color:#32CD32;font-weight:bold;">' + esc(foundItem.seller || 'Anonymous') + '</span> — ' + esc(foundItem.subcat || '');
+    document.getElementById('srDetailMeta').innerHTML = esc(foundItem.subcat || '');
     document.getElementById('srDetailDesc').textContent = 'For microscopy and research purposes only. Spore prints are sold as-is with no guarantees. Handle with care.';
     
     const wrap = document.getElementById('srDetailImgWrap');
@@ -584,7 +589,6 @@ document.getElementById('srDetailOverlay').addEventListener('click', function(e)
     }
 });
 
-// ===== SEARCH =====
 const srSearchInput = document.getElementById('srSearchInput');
 const srSearchBtn = document.getElementById('srSearchBtn');
 let srOriginalGrid = '';
@@ -596,6 +600,7 @@ function srDoSearch() {
         document.getElementById('tab-title').textContent = 'Welcome to Silk Road';
         document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
         allDetails.forEach(d => d.removeAttribute('open'));
+        currentGridItems = [];
         return;
     }
     
@@ -622,7 +627,9 @@ function srDoSearch() {
         document.getElementById('tab-title').textContent = 'Search Results';
         document.getElementById('tab-content').innerHTML = '<p>No matches.</p>';
         allDetails.forEach(d => d.removeAttribute('open'));
+        currentGridItems = [];
     } else {
+        currentGridItems = allCards;
         document.getElementById('srGrid').innerHTML = renderGrid(allCards);
         allDetails.forEach(d => {
             if (d.getAttribute('data-cat') === firstMatchCat) {
