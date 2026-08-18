@@ -3,10 +3,164 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Spore Road</title>
+   <title>Site Name</title>
    <style>
    * { box-sizing: border-box; }
 
+   html, body { max-width: 100%; overflow-x: hidden; }
+
+   body {
+       background: #FFFFFF;
+       font-family: Arial, sans-serif;
+       padding: 20px;
+       margin: 0;
+   }
+
+   /* ---- Header ---- */
+   .sr-account-bar {
+       display: flex;
+       justify-content: flex-end;
+       flex-wrap: wrap;
+       font-size: 13px;
+       color: #333;
+       margin-bottom: 5px;
+       gap: 4px 10px;
+   }
+   .sr-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       flex-wrap: wrap;
+       gap: 12px;
+       margin-bottom: 5px;
+       padding-bottom: 10px;
+       border-bottom: 1px solid #ccc;
+   }
+
+   /* Logo acts as the H1: image on top, tagline centered directly under it,
+      logo sized just a touch larger than the tagline text. */
+.sr-logo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.sr-logo-block img {
+    height: 180px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+}
+.sr-logo-block h3 {
+    margin: -4px 0 0;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: italic;
+    color: #666;
+    text-align: center;
+    line-height: 1;
+    white-space: normal;
+    max-width: 90vw;
+}
+
+   .sr-search-row {
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       flex: 1 1 260px;
+       justify-content: flex-end;
+   }
+   .sr-search-row label {
+       font-size: 13px;
+       font-weight: bold;
+       color: #333;
+       white-space: nowrap;
+   }
+   #srSearchInput {
+       flex: 1 1 auto;
+       min-width: 0;
+       max-width: 250px;
+       padding: 7px 8px;
+       border: 1px solid #ccc;
+       border-right: 0;
+       font-size: 13px;
+   }
+   #srSearchBtn {
+       padding: 7px 14px;
+       border: 1px solid #ccc;
+       background: #f0f0f0;
+       font-size: 13px;
+       cursor: pointer;
+       margin-left: -1px;
+       white-space: nowrap;
+   }
+   #srSearchBtn:hover { background: #e4e4e4; }
+
+   /* ---- Layout ---- */
+   .sr-main {
+       display: flex;
+       gap: 20px;
+   }
+   .sr-sidebar-wrap { flex-shrink: 0; }
+   .sr-sidebar-tab {
+       background: #e8e8e8;
+       display: inline-block;
+       padding: 3px 10px;
+       border: 1px solid #ccc;
+       border-bottom: 0;
+       font-size: 12px;
+       color: #333;
+   }
+
+   /* ---- Sidebar / category + subcategory active states ---- */
+   #srSidebar {
+       width: 200px;
+       background: #fff;
+       border: 1px solid #ccc;
+       padding: 5px 0;
+       color: #32CD32;
+   }
+   #srSidebar summary {
+       list-style: none;
+       padding: 7px 10px 7px 12px;
+       font-size: 13px;
+       cursor: pointer;
+       color: #333;
+       border-left: 3px solid transparent;
+       transition: background 0.15s, border-color 0.15s, color 0.15s;
+   }
+   #srSidebar summary::-webkit-details-marker { display: none; }
+   #srSidebar summary:hover {
+       background: #f5f5f5;
+       border-left-color: #b7e6b0;
+   }
+   #srSidebar details[open] > summary {
+       background: #eef9ee;
+       border-left-color: #32CD32;
+       color: #279327;
+       font-weight: bold;
+   }
+   .subcat-item {
+       padding: 7px 10px 7px 12px;
+       font-size: 12px;
+       cursor: pointer;
+       color: #32CD32;
+       border-left: 3px solid transparent;
+       transition: background 0.15s, border-color 0.15s;
+   }
+   .subcat-item:hover {
+       background: #f5f5f5;
+       border-left-color: #b7e6b0;
+   }
+   .subcat-item.active {
+       background: #eef9ee;
+       border-left-color: #32CD32;
+       color: #279327;
+       font-weight: bold;
+   }
+
+   /* ---- Grid / cards ---- */
    .sr-grid {
        display: grid;
        grid-template-columns: repeat(4, 1fr);
@@ -17,9 +171,12 @@
        border: 1px solid #ccc;
        padding: 10px;
        cursor: pointer;
-       transition: box-shadow 0.15s;
+       transition: box-shadow 0.15s, border-color 0.15s;
    }
-   .sr-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+   .sr-card:hover {
+       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+       border-color: #999;
+   }
    .sr-img-box {
        width: 100%;
        height: 120px;
@@ -88,19 +245,6 @@
        font-size: 13px;
        margin: 0 0 10px 0;
    }
-   .subcat-item {
-       padding: 2px 10px;
-       font-size: 12px;
-       cursor: pointer;
-       color: #32CD32;
-   }
-   .subcat-item:hover {
-       background: #f0f0f0;
-   }
-   .subcat-item.active {
-       background: #e8e8e8;
-       font-weight: bold;
-   }
 
    .sr-img-wrap {
        position: relative;
@@ -125,8 +269,8 @@
        position: absolute;
        top: 50%;
        transform: translateY(-50%);
-       width: 28px;
-       height: 28px;
+       width: 30px;
+       height: 30px;
        background: rgba(255,255,255,0.85);
        border: 1px solid #ccc;
        border-radius: 3px;
@@ -158,6 +302,7 @@
        z-index: 5;
    }
 
+   /* ---- Product detail modal ---- */
    .sr-detail-overlay {
        display: none;
        position: fixed;
@@ -189,8 +334,8 @@
        border: none;
        line-height: 1;
        z-index: 10;
-       width: 24px;
-       height: 24px;
+       width: 32px;
+       height: 32px;
        display: flex;
        align-items: center;
        justify-content: center;
@@ -242,78 +387,103 @@
        margin-bottom: 15px;
    }
 
+   /* ---- Keyboard focus visibility ---- */
+   #srSearchInput:focus-visible,
+   #srSearchBtn:focus-visible,
+   .sr-detail-close:focus-visible,
+   #srSidebar summary:focus-visible,
+   .subcat-item:focus-visible {
+       outline: 2px solid #32CD32;
+       outline-offset: 2px;
+   }
+
+   /* ---- Responsive breakpoints ---- */
    @media (max-width: 1100px) {
        .sr-grid { grid-template-columns: repeat(3, 1fr); }
    }
    @media (max-width: 800px) {
        .sr-grid { grid-template-columns: repeat(2, 1fr); }
    }
-   @media (max-width: 450px) {
-       .sr-grid { grid-template-columns: 1fr; }
-   }
    @media (max-width: 700px) {
-       .sr-main {
-           flex-direction: column !important;
-       }
-       #srSidebar {
-           width: 100% !important;
-       }
+       .sr-main { flex-direction: column; }
+       .sr-sidebar-wrap { margin-bottom: 15px; }
+       #srSidebar { width: 100%; }
+   }
+   @media (max-width: 600px) {
+       body { padding: 12px; }
+       .sr-header { flex-direction: column; }
+       .sr-account-bar { justify-content: center; font-size: 12px; }
+       .sr-search-row { justify-content: stretch; }
+       #srSearchInput { max-width: none; }
+       .sr-detail-overlay { padding: 14px; }
+       .sr-detail-img-wrap { height: 210px; }
+   }
+   @media (max-width: 450px) {
+       .sr-grid { grid-template-columns: 1fr; gap: 12px; }
    }
    </style>
 </head>
-<body style="background: #FFFFFF; font-family: Arial, sans-serif; padding: 20px; margin: 0;">
+<body>
 
 <!-- Account bar -->
-<div style="display: flex; justify-content: flex-end; font-size: 13px; color: #333; margin-bottom: 5px;">
-   <div style="width: 250px; text-align: right; padding-right: 38px;">
-       messages <span style="color: #999;">0</span> |
-       orders <span style="color: #999;">0</span> |
-       account <span style="color: #32CD32; font-weight: bold;">฿0.00</span>
-   </div>
+<div class="sr-account-bar">
+   messages <span style="color: #999;">0</span> |
+   orders <span style="color: #999;">0</span> |
+   account <span style="color: #32CD32; font-weight: bold;">฿0.00</span>
 </div>
 
-<!-- Logo + Search -->
-<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #ccc;">
-   <div style="display: flex; align-items: center; gap: 10px;">
-     <img src="https://i.ibb.co/JRVtLD55/newnewlogo.jpg" style="height: 70px; width: auto; display: block;">
-       <div>
-           <h1 style="font-size: 32px; margin: 0; color: #333;">Spore Road</h1>
-           <h3 style="margin: 0; font-size: 12px; font-weight: normal; font-style: italic; color: #666;"><b>spore catalog</b></h3>
-       </div>
-   </div>
-   <div style="display: flex; align-items: center; gap: 10px;">
-       <span style="font-size: 13px; font-weight: bold; color: #333;">Search</span>
-       <input type="text" id="srSearchInput" style="padding: 4px 8px; border: 1px solid #ccc; border-right: 0; font-size: 13px; width: 250px;">
-       <button id="srSearchBtn" style="padding: 4px 12px; border: 1px solid #ccc; background: #f0f0f0; font-size: 13px; cursor: pointer; margin-left: -1px;">Go</button>
-   </div>
+<!-- Logo (acts as H1) + tagline centered underneath -->
+<div class="sr-header">
+    <div class="sr-logo-block">
+        <img src="Adobe Express - file.png" alt="Site Name"  >
+        <h3><b>your tagline here</b></h3>
+    </div>
+
+    <div class="sr-search-row">
+        <label for="srSearchInput">Search</label>
+        <input type="text" id="srSearchInput">
+        <button id="srSearchBtn">Go</button>
+    </div>
 </div>
+
 
 <!-- Main content -->
-<div class="sr-main" style="display: flex; gap: 20px;">
+<div class="sr-main">
 
    <!-- Sidebar -->
-   <div style="flex-shrink: 0;">
-       <div style="background: #e8e8e8; display: inline-block; padding: 3px 10px; border: 1px solid #ccc; border-bottom: 0; font-size: 12px; color: #333;">
-           Shop by Category
-       </div>
-       <div id="srSidebar" style="width: 200px; background: #fff; border: 1px solid #ccc; padding: 5px 0; color: #32CD32;">
+   <div class="sr-sidebar-wrap">
+       <div class="sr-sidebar-tab">Shop by Category</div>
+       <div id="srSidebar">
 
-           <details data-cat="Spore Prints">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px; cursor: pointer;">Spore Prints <span style="color: #999;">38</span></summary>
+           <details data-cat="Glass">
+               <summary>Glass <span style="color: #999;">2</span></summary>
                <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Psilocybe Cubensis">Psilocybe Cubensis</div>
-                   <div class="subcat-item" data-subcat="Psilocybe Exotics">Psilocybe Exotics</div>
-                   <div class="subcat-item" data-subcat="Panaeolus">Panaeolus</div>
-                   <div class="subcat-item" data-subcat="Albino Varieties">Albino Varieties</div>
+                   <div class="subcat-item" data-subcat="Drinkware">Drinkware</div>
+                   <div class="subcat-item" data-subcat="Antiques">Antiques</div>
                </div>
            </details>
 
-           <details data-cat="Jewelry">
-               <summary style="list-style: none; padding: 2px 10px; font-size: 13px; cursor: pointer;">Jewelry <span style="color: #999;">4</span></summary>
+           <details data-cat="Bronze">
+               <summary>Bronze <span style="color: #999;">2</span></summary>
                <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Rings">Rings</div>
-                   <div class="subcat-item" data-subcat="Necklaces">Necklaces</div>
-                   <div class="subcat-item" data-subcat="Watches">Watches</div>
+                   <div class="subcat-item" data-subcat="Statues">Statues</div>
+                   <div class="subcat-item" data-subcat="Coins & Medals">Coins & Medals</div>
+               </div>
+           </details>
+
+           <details data-cat="Carbon">
+               <summary>Carbon <span style="color: #999;">2</span></summary>
+               <div style="padding-left: 15px;">
+                   <div class="subcat-item" data-subcat="Bike Parts">Bike Parts</div>
+                   <div class="subcat-item" data-subcat="Fishing Rods">Fishing Rods</div>
+               </div>
+           </details>
+
+           <details data-cat="Apples">
+               <summary>Apples <span style="color: #999;">2</span></summary>
+               <div style="padding-left: 15px;">
+                   <div class="subcat-item" data-subcat="Fresh Fruit">Fresh Fruit</div>
+                   <div class="subcat-item" data-subcat="Homemade Cider">Homemade Cider</div>
                </div>
            </details>
 
@@ -321,28 +491,17 @@
    </div>
 
    <!-- MAIN AREA -->
-   <div style="flex: 1;">
+   <div style="flex: 1; min-width: 0;">
 
        <div class="sr-tab-panel">
-           <div class="sr-tab-header" id="tab-title">Featured — Psilocybe Azurescens</div>
+           <div class="sr-tab-header" id="tab-title">Welcome</div>
            <div class="sr-tab-body" id="tab-content">
-               <p>For microscopy and research purposes only. One of the most potent species in the world.</p>
+               <p>Select a category from the sidebar to browse listings.</p>
            </div>
        </div>
 
        <div class="sr-grid" id="srGrid">
-           <div class="sr-card" onclick="showDetailModal(categoryData['Spore Prints'].items[22])">
-               <div class="sr-img-wrap" id="imgwrap-featured">
-                   <img src="https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp" class="active" alt="Psilocybe Azurescens">
-                   <img src="https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp" alt="Psilocybe Azurescens">
-                   <div class="sr-img-arrow prev hidden" id="arrow-prev-featured" onclick="event.stopPropagation(); cardArrow(event, 'featured', -1)">&#9664;</div>
-                   <div class="sr-img-arrow next" id="arrow-next-featured" onclick="event.stopPropagation(); cardArrow(event, 'featured', 1)">&#9654;</div>
-                   <div class="sr-img-counter">1 / 2</div>
-               </div>
-               <div class="sr-title">Psilocybe Azurescens</div>
-               <div class="sr-seller-row"><span class="sr-seller">Not in Stock</span></div>
-               <div class="sr-price">฿0.17</div>
-           </div>
+           <div class="sr-empty">Placeholder — pick a category on the left, or edit this area in the HTML.</div>
        </div>
 
    </div>
@@ -352,7 +511,7 @@
 <!-- Product Detail Modal -->
 <div class="sr-detail-overlay" id="srDetailOverlay">
     <div class="sr-detail-box">
-        <button class="sr-detail-close" id="srDetailClose">&#10005;</button>
+        <button class="sr-detail-close" id="srDetailClose" aria-label="Close">&#10005;</button>
         <div class="sr-detail-img-wrap" id="srDetailImgWrap"></div>
         <div class="sr-detail-content">
             <div class="sr-detail-title" id="srDetailTitle"></div>
@@ -365,54 +524,36 @@
 
 <script>
 const categoryData = {
-"Spore Prints": {
-    title: "Spore Prints ",
-    text: "All spore prints are sold for microscopy and research purposes only.",
+"Glass": {
+    title: "Glass",
+    text: "Placeholder description for Glass. Edit this text.",
     items: [
-        { title: "Amazonian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/qYDmRz4q/amazonian1.webp"] },
-        { title: "Argentina", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/hSrPpkH/cubensis-argentina.webp"] },
-        { title: "Australian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/1GYbVyDy/cubensis-australian.webp"] },
-        { title: "Avery Albino", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/vCHW5xn5/Cubensis-Avery-Albino.webp"] },
-        { title: "Ban Hua Thai", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/fd3tz3gw/Cubensis-ban-hua-thai.webp"] },
-        { title: "Ban Thurian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/Rk1H70nb/Cubensis-Ban-Thurian.webp"] },
-        { title: "Blue Meanie", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.13", images: ["https://i.ibb.co/BHYQZ2vF/Cubensis-Blue-Meanie.webp"] },
-        { title: "Bluey Vuitton", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/5gc03h0Z/Cubensis-Bluey-Vuitton.webp"] },
-        { title: "B+", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/t5kzyK2/cubensis-b-plus.webp"] },
-        { title: "B+ AKM 2", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/Qvt9hY1R/Cubensis-B-plus-Akm-2.webp"] },
-        { title: "Brasil", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/PsLGvX7H/cubensis-brasil.webp", "https://i.ibb.co/xtVVjTdN/brasil.webp"] },
-        { title: "Cambodian", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/7xRjrK5h/cubensis-cambodian.webp"] },
-        { title: "Lizard King", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.13", images: ["https://i.ibb.co/5g8xP0t6/Cubensis-Lizard-King.webp"] },
-        { title: "Teonanacatl", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.11", images: ["https://i.ibb.co/bR5Pkdt2/cubensis-teonanacalt.webp"] },
-        { title: "Thai", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.10", images: ["https://i.ibb.co/5XfkpQ2p/cubensis-thai.webp"] },
-        { title: "Koh Samui Super Strain", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/27vgRFbZ/Cubensis-thai-koh-samui-super-strain.webp"] },
-        { title: "Arenal Volcano", subcat: "Psilocybe Cubensis", seller: "Not in Stock", price: "฿0.12", images: ["https://i.ibb.co/6cWM5Dp8/Cubensis-Arenal-Volcano.webp"] },
-        { title: "Albino A", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-A.webp"] },
-        { title: "Albino ODPE x Shakti", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.18", images: ["https://i.ibb.co/8DrvVQQ5/Cubensis-Albino-ODPE-x-Shakti.webp"] },
-        { title: "APE Revert", subcat: "Albino Varieties", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/NdPmRk2m/Cubensis-APE-Revert.webp"] },
-        { title: "Panaeolus Tropicalis", subcat: "Panaeolus", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/DHdmWpzt/Panaeolus-Tropicalis-II.webp"] },
-        { title: "Psilocybe Atlantis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/vx3YJDmq/Psilocybe-Atlantis.webp"] },
-        { title: "Psilocybe Azurescens", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.17", images: ["https://i.ibb.co/LDTkvSfn/Psilocybe-Azurescens.webp", "https://i.ibb.co/vvVxR28b/Psilocybe-Azurescens-2lo420f4.webp"] },
-        { title: "Psilocybe Cyanescens", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/rRG13RDL/Psilocybe-Cyanescens.webp"] },
-        { title: "Psilocybe Hispanica", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/F4N8wzMC/Psilocybe-Hispanica.webp"] },
-        { title: "Psilocybe Mexicana Rancho Agosto", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/KpdxDXRN/Psilocybe-Mexicana-Rancho-Agosto.webp"] },
-        { title: "Psilocybe Natalensis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/spYTPk6v/Psilocybe-Natalensis.webp"] },
-        { title: "Psilocybe Ovoideocystidiata", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/SXXZFxkV/Psilocybe-Ovoideocystidiata.webp"] },
-        { title: "Psilocybe Papuana", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/YB6s7K7S/Psilocybe-Papuana.webp"] },
-        { title: "Psilocybe Pseudozapotecorum", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/Fkmdvyms/Psilocybe-Pseudozapotecorum.webp"] },
-        { title: "Psilocybe Serbica", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/gMBr5RMJ/Psilocybe-Serbica.webp", "https://i.ibb.co/GfRzNTPr/Psilocybe-Serbica-2.webp"] },
-        { title: "Psilocybe Subaeruginosa", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.16", images: ["https://i.ibb.co/TqxD3NNM/Psilocybe-Subaeruginosa.webp"] },
-        { title: "Psilocybe Subsecotioides", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.14", images: ["https://i.ibb.co/cMxnB94/Psilocybe-Subsecotioides.webp"] },
-        { title: "Psilocybe Tampanensis", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/RGrbv161/Psilocybe-Tampanensis.webp", "https://i.ibb.co/QjmL4n2W/Psilocybe-Tampanensis-2.webp"] },
-        { title: "Tampanensis Beulah", subcat: "Psilocybe Exotics", seller: "Not in Stock", price: "฿0.15", images: ["https://i.ibb.co/prhsNHRy/Tampanensis-Beulah.webp"] }
+        { title: "Hand-Blown Wine Glasses (Set of 4)", subcat: "Drinkware", seller: "Maria's Glassworks", price: "฿450.00", images: [] },
+        { title: "Vintage Amber Glass Vase", subcat: "Antiques", seller: "Somchai Home Finds", price: "฿780.00", images: [] }
     ]
 },
-"Jewelry": {
-    title: "Jewelry — 3 listings",
-    text: "Rings, necklaces, and precious items.",
+"Bronze": {
+    title: "Bronze",
+    text: "Placeholder description for Bronze. Edit this text.",
     items: [
-        { title: "Silver Ring", subcat: "Rings", seller: "GemHunter", price: "฿0.70", images: [] },
-        { title: "Vintage Watch", subcat: "Watches", seller: "TimeKeep", price: "฿1.50", images: [] },
-        { title: "Gold Chain", subcat: "Necklaces", seller: "BlingKing", price: "฿2.00", images: [] }
+        { title: "Small Bronze Buddha Statue", subcat: "Statues", seller: "Wat Arun Crafts", price: "฿1,200.00", images: [] },
+        { title: "Antique Bronze Coin Set", subcat: "Coins & Medals", seller: "Old Siam Collectibles", price: "฿950.00", images: [] }
+    ]
+},
+"Carbon": {
+    title: "Carbon",
+    text: "Placeholder description for Carbon. Edit this text.",
+    items: [
+        { title: "Carbon Fiber Road Bike Frame", subcat: "Bike Parts", seller: "Pattaya Cycles", price: "฿6,500.00", images: [] },
+        { title: "Carbon Fiber Fishing Rod", subcat: "Fishing Rods", seller: "Gulf Coast Angler", price: "฿1,100.00", images: [] }
+    ]
+},
+"Apples": {
+    title: "Apples",
+    text: "Placeholder description for Apples. Edit this text.",
+    items: [
+        { title: "Fresh Fuji Apples (5kg Box)", subcat: "Fresh Fruit", seller: "Doi Ang Khang Orchard", price: "฿320.00", images: [] },
+        { title: "Homemade Apple Cider (1L)", subcat: "Homemade Cider", seller: "Baan Suan Ferments", price: "฿180.00", images: [] }
     ]
 }
 };
@@ -424,12 +565,12 @@ let currentGridItems = [];
 function renderCard(item, idx) {
     const hasImages = item.images && item.images.length > 0;
     let imgHtml = '';
-    
+
     if (hasImages) {
         if (item.images.length === 1) {
             imgHtml = `<div class="sr-img-box"><img src="${item.images[0]}" alt="${esc(item.title)}" onerror="this.parentElement.style.display='none'"></div>`;
         } else {
-            const imgs = item.images.map((src, i) => 
+            const imgs = item.images.map((src, i) =>
                 `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(item.title)}" onerror="this.style.display='none'">`
             ).join('');
             imgHtml = `
@@ -444,7 +585,7 @@ function renderCard(item, idx) {
     } else {
         imgHtml = `<div class="sr-img-box" style="background:#ddd;"></div>`;
     }
-    
+
     return `
         <div class="sr-card" data-subcat="${esc(item.subcat || '')}" onclick="openDetail(${idx})">
             ${imgHtml}
@@ -463,17 +604,17 @@ function cardArrow(e, cardIdx, dir) {
     const total = imgs.length;
     let current = 0;
     imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
-    
+
     let next = current + dir;
     if (next < 0) next = total - 1;
     if (next >= total) next = 0;
-    
+
     imgs.forEach((img, i) => img.classList.toggle('active', i === next));
-    
+
     const prevArrow = document.getElementById('arrow-prev-' + cardIdx);
     const nextArrow = document.getElementById('arrow-next-' + cardIdx);
     const counter = wrap.querySelector('.sr-img-counter');
-    
+
     if (total <= 1) {
         if (prevArrow) prevArrow.classList.add('hidden');
         if (nextArrow) nextArrow.classList.add('hidden');
@@ -494,12 +635,12 @@ function renderGrid(items) {
 function showCategory(cat, subcat) {
     const data = categoryData[cat];
     if (!data) return;
-    
+
     let items = data.items;
     if (subcat) {
         items = items.filter(item => item.subcat === subcat);
     }
-    
+
     currentGridItems = items;
     document.getElementById('tab-title').textContent = subcat ? cat + ' — ' + subcat : data.title;
     document.getElementById('tab-content').innerHTML = '<p>' + esc(data.text) + '</p>';
@@ -524,10 +665,10 @@ document.querySelectorAll('.subcat-item').forEach(item => {
         const subcat = this.getAttribute('data-subcat');
         const parent = this.closest('details');
         const cat = parent.getAttribute('data-cat');
-        
+
         parent.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
         this.classList.add('active');
-        
+
         showCategory(cat, subcat);
     });
 });
@@ -541,15 +682,15 @@ function openDetail(idx) {
 function showDetailModal(foundItem) {
     currentDetailItem = foundItem;
     currentDetailImgIdx = 0;
-    
+
     document.getElementById('srDetailTitle').textContent = foundItem.title;
     document.getElementById('srDetailPrice').textContent = foundItem.price || 'No price';
     document.getElementById('srDetailMeta').innerHTML = esc(foundItem.subcat || '');
-    document.getElementById('srDetailDesc').textContent = 'For microscopy and research purposes only. Spore prints are sold as-is with no guarantees. Handle with care.';
-    
+    document.getElementById('srDetailDesc').textContent = 'Placeholder item description. Edit this text in the script.';
+
     const wrap = document.getElementById('srDetailImgWrap');
     if (foundItem.images && foundItem.images.length > 0) {
-        const imgs = foundItem.images.map((src, i) => 
+        const imgs = foundItem.images.map((src, i) =>
             `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(foundItem.title)}" onerror="this.style.display='none'">`
         ).join('');
         const prevClass = foundItem.images.length > 1 ? '' : 'hidden';
@@ -562,8 +703,14 @@ function showDetailModal(foundItem) {
     } else {
         wrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;">No image</div>';
     }
-    
+
     document.getElementById('srDetailOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDetailModal() {
+    document.getElementById('srDetailOverlay').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 function detailArrow(dir) {
@@ -572,20 +719,22 @@ function detailArrow(dir) {
     currentDetailImgIdx += dir;
     if (currentDetailImgIdx < 0) currentDetailImgIdx = total - 1;
     if (currentDetailImgIdx >= total) currentDetailImgIdx = 0;
-    
+
     const wrap = document.getElementById('srDetailImgWrap');
     const imgs = wrap.querySelectorAll('img');
     imgs.forEach((img, i) => img.classList.toggle('active', i === currentDetailImgIdx));
     document.getElementById('detailCounter').textContent = (currentDetailImgIdx + 1) + ' / ' + total;
 }
 
-document.getElementById('srDetailClose').addEventListener('click', function() {
-    document.getElementById('srDetailOverlay').classList.remove('active');
-});
+document.getElementById('srDetailClose').addEventListener('click', closeDetailModal);
 
 document.getElementById('srDetailOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        document.getElementById('srDetailOverlay').classList.remove('active');
+    if (e.target === this) closeDetailModal();
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('srDetailOverlay').classList.contains('active')) {
+        closeDetailModal();
     }
 });
 
@@ -597,17 +746,17 @@ function srDoSearch() {
     const query = srSearchInput.value.trim().toLowerCase();
     if (!query) {
         document.getElementById('srGrid').innerHTML = srOriginalGrid;
-        document.getElementById('tab-title').textContent = 'Welcome to Silk Road';
+        document.getElementById('tab-title').textContent = 'Welcome';
         document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
         allDetails.forEach(d => d.removeAttribute('open'));
         currentGridItems = [];
         return;
     }
-    
+
     const allCards = [];
     let firstMatchCat = null;
     let firstMatchSubcat = null;
-    
+
     for (const cat in categoryData) {
         const data = categoryData[cat];
         data.items.forEach(item => {
@@ -621,7 +770,7 @@ function srDoSearch() {
             }
         });
     }
-    
+
     if (allCards.length === 0) {
         document.getElementById('srGrid').innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
         document.getElementById('tab-title').textContent = 'Search Results';
