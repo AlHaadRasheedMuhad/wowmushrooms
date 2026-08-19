@@ -1,814 +1,1563 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Site Name</title>
-   <style>
-   * { box-sizing: border-box; }
 
-   html, body { max-width: 100%; overflow-x: hidden; }
+<meta charset="UTF-8">
 
-   body {
-       background: #FFFFFF;
-       font-family: Arial, sans-serif;
-       padding: 20px;
-       margin: 0;
-   }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   /* ---- Header ---- */
-   .sr-account-bar {
-       display: flex;
-       justify-content: flex-end;
-       flex-wrap: wrap;
-       font-size: 13px;
-       color: #333;
-       margin-bottom: 5px;
-       gap: 4px 10px;
-   }
-   .sr-header {
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       flex-wrap: wrap;
-       gap: 12px;
-       margin-bottom: 5px;
-       padding-bottom: 10px;
-       border-bottom: 1px solid #ccc;
-   }
+<title>Site Name</title>
 
-   /* Logo acts as the H1: image on top, tagline centered directly under it,
-      logo sized just a touch larger than the tagline text. */
+<style>
+
+* { box-sizing: border-box; }
+
+
+html, body { max-width: 100%; overflow-x: hidden; }
+
+
+body {
+
+background: #FFFFFF;
+
+font-family: Arial, sans-serif;
+
+padding: 20px;
+
+margin: 0;
+
+}
+
+
+/* ---- Header ---- */
+
+.sr-account-bar {
+
+display: flex;
+
+justify-content: flex-end;
+
+flex-wrap: wrap;
+
+font-size: 13px;
+
+color: #333;
+
+margin-bottom: 5px;
+
+gap: 4px 10px;
+
+}
+
+.sr-header {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+flex-wrap: wrap;
+
+gap: 12px;
+
+margin-bottom: 5px;
+
+padding-bottom: 10px;
+
+border-bottom: 1px solid #ccc;
+
+}
+
+
+/* Logo acts as the H1: image on top, tagline centered directly under it,
+
+logo sized just a touch larger than the tagline text. */
+
 .sr-logo-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+gap: 0;
+
 }
+
 .sr-logo-block img {
-    height: 180px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
+
+height: 180px;
+
+width: auto;
+
+max-width: 100%;
+
+object-fit: contain;
+
+display: block;
+
 }
+
 .sr-logo-block h3 {
-    margin: -4px 0 0;
-    font-size: 13px;
-    font-weight: normal;
-    font-style: italic;
-    color: #666;
-    text-align: center;
-    line-height: 1;
-    white-space: normal;
-    max-width: 90vw;
+
+margin: -4px 0 0;
+
+font-size: 13px;
+
+font-weight: normal;
+
+font-style: italic;
+
+color: #666;
+
+text-align: center;
+
+line-height: 1;
+
+white-space: normal;
+
+max-width: 90vw;
+
 }
 
-   .sr-search-row {
-       display: flex;
-       align-items: center;
-       gap: 8px;
-       flex: 1 1 260px;
-       justify-content: flex-end;
-   }
-   .sr-search-row label {
-       font-size: 13px;
-       font-weight: bold;
-       color: #333;
-       white-space: nowrap;
-   }
-   #srSearchInput {
-       flex: 1 1 auto;
-       min-width: 0;
-       max-width: 250px;
-       padding: 7px 8px;
-       border: 1px solid #ccc;
-       border-right: 0;
-       font-size: 13px;
-   }
-   #srSearchBtn {
-       padding: 7px 14px;
-       border: 1px solid #ccc;
-       background: #f0f0f0;
-       font-size: 13px;
-       cursor: pointer;
-       margin-left: -1px;
-       white-space: nowrap;
-   }
-   #srSearchBtn:hover { background: #e4e4e4; }
 
-   /* ---- Layout ---- */
-   .sr-main {
-       display: flex;
-       gap: 20px;
-   }
-   .sr-sidebar-wrap { flex-shrink: 0; }
-   .sr-sidebar-tab {
-       background: #e8e8e8;
-       display: inline-block;
-       padding: 3px 10px;
-       border: 1px solid #ccc;
-       border-bottom: 0;
-       font-size: 12px;
-       color: #333;
-   }
+.sr-search-row {
 
-   /* ---- Sidebar / category + subcategory active states ---- */
-   #srSidebar {
-       width: 200px;
-       background: #fff;
-       border: 1px solid #ccc;
-       padding: 5px 0;
-       color: #32CD32;
-   }
-   #srSidebar summary {
-       list-style: none;
-       padding: 7px 10px 7px 12px;
-       font-size: 13px;
-       cursor: pointer;
-       color: #333;
-       border-left: 3px solid transparent;
-       transition: background 0.15s, border-color 0.15s, color 0.15s;
-   }
-   #srSidebar summary::-webkit-details-marker { display: none; }
-   #srSidebar summary:hover {
-       background: #f5f5f5;
-       border-left-color: #b7e6b0;
-   }
-   #srSidebar details[open] > summary {
-       background: #eef9ee;
-       border-left-color: #32CD32;
-       color: #279327;
-       font-weight: bold;
-   }
-   .subcat-item {
-       padding: 7px 10px 7px 12px;
-       font-size: 12px;
-       cursor: pointer;
-       color: #32CD32;
-       border-left: 3px solid transparent;
-       transition: background 0.15s, border-color 0.15s;
-   }
-   .subcat-item:hover {
-       background: #f5f5f5;
-       border-left-color: #b7e6b0;
-   }
-   .subcat-item.active {
-       background: #eef9ee;
-       border-left-color: #32CD32;
-       color: #279327;
-       font-weight: bold;
-   }
+display: flex;
 
-   /* ---- Grid / cards ---- */
-   .sr-grid {
-       display: grid;
-       grid-template-columns: repeat(4, 1fr);
-       gap: 15px;
-   }
-   .sr-card {
-       background: #fff;
-       border: 1px solid #ccc;
-       padding: 10px;
-       cursor: pointer;
-       transition: box-shadow 0.15s, border-color 0.15s;
-   }
-   .sr-card:hover {
-       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-       border-color: #999;
-   }
-   .sr-img-box {
-       width: 100%;
-       height: 120px;
-       background: #eee;
-       overflow: hidden;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-   }
-   .sr-img-box img {
-       max-width: 100%;
-       max-height: 100%;
-       object-fit: contain;
-       display: block;
-   }
-   .sr-title {
-       font-size: 12px;
-       color: #32CD32;
-       margin-top: 8px;
-       font-weight: bold;
-       line-height: 1.3;
-       word-break: break-word;
-   }
-   .sr-seller-row {
-       margin-top: 4px;
-       display: flex;
-       align-items: center;
-       gap: 6px;
-       flex-wrap: wrap;
-   }
-   .sr-seller {
-       font-size: 12px;
-       color: #999;
-   }
-   .sr-price {
-       font-size: 14px;
-       color: #c00;
-       margin-top: 8px;
-       font-weight: bold;
-   }
-   .sr-empty {
-       color: #999;
-       text-align: center;
-       padding: 40px;
-       grid-column: 1 / -1;
-       font-size: 13px;
-   }
-   .sr-tab-panel {
-       background: #fff;
-       border: 1px solid #ccc;
-       margin-bottom: 15px;
-   }
-   .sr-tab-header {
-       background: #e8e8e8;
-       padding: 8px 12px;
-       font-size: 13px;
-       font-weight: bold;
-       color: #333;
-       border-bottom: 1px solid #ccc;
-   }
-   .sr-tab-body {
-       padding: 12px;
-   }
-   .sr-tab-body p {
-       color: #666;
-       font-size: 13px;
-       margin: 0 0 10px 0;
-   }
+align-items: center;
 
-   .sr-img-wrap {
-       position: relative;
-       width: 100%;
-       height: 120px;
-       background: #eee;
-       overflow: hidden;
-   }
-   .sr-img-wrap img {
-       position: absolute;
-       top: 0; left: 0;
-       width: 100%;
-       height: 100%;
-       object-fit: contain;
-       opacity: 0;
-       transition: opacity 0.3s;
-   }
-   .sr-img-wrap img.active {
-       opacity: 1;
-   }
-   .sr-img-arrow {
-       position: absolute;
-       top: 50%;
-       transform: translateY(-50%);
-       width: 30px;
-       height: 30px;
-       background: rgba(255,255,255,0.85);
-       border: 1px solid #ccc;
-       border-radius: 3px;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       cursor: pointer;
-       font-size: 14px;
-       color: #333;
-       z-index: 5;
-       user-select: none;
-   }
-   .sr-img-arrow:hover {
-       background: rgba(255,255,255,1);
-       border-color: #999;
-   }
-   .sr-img-arrow.prev { left: 4px; }
-   .sr-img-arrow.next { right: 4px; }
-   .sr-img-arrow.hidden { display: none; }
-   .sr-img-counter {
-       position: absolute;
-       bottom: 4px;
-       right: 6px;
-       background: rgba(0,0,0,0.5);
-       color: white;
-       font-size: 10px;
-       padding: 2px 6px;
-       border-radius: 3px;
-       z-index: 5;
-   }
+gap: 8px;
 
-   /* ---- Product detail modal ---- */
-   .sr-detail-overlay {
-       display: none;
-       position: fixed;
-       top: 0; left: 0; right: 0; bottom: 0;
-       background: rgba(0,0,0,0.5);
-       z-index: 200;
-       justify-content: center;
-       align-items: center;
-       padding: 40px;
-   }
-   .sr-detail-overlay.active { display: flex; }
-   .sr-detail-box {
-       background: #fff;
-       border: 1px solid #ccc;
-       max-width: 500px;
-       width: 100%;
-       max-height: 85vh;
-       overflow-y: auto;
-       position: relative;
-       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-   }
-   .sr-detail-close {
-       position: absolute;
-       top: 8px; left: 10px;
-       color: #999;
-       font-size: 20px;
-       cursor: pointer;
-       background: none;
-       border: none;
-       line-height: 1;
-       z-index: 10;
-       width: 32px;
-       height: 32px;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-   }
-   .sr-detail-close:hover { color: #333; }
-   .sr-detail-img-wrap {
-       position: relative;
-       width: 100%;
-       height: 280px;
-       background: #eee;
-       overflow: hidden;
-   }
-   .sr-detail-img-wrap img {
-       position: absolute;
-       top: 0; left: 0;
-       width: 100%;
-       height: 100%;
-       object-fit: contain;
-       opacity: 0;
-       transition: opacity 0.3s;
-   }
-   .sr-detail-img-wrap img.active {
-       opacity: 1;
-   }
-   .sr-detail-content {
-       padding: 15px;
-   }
-   .sr-detail-title {
-       color: #32CD32;
-       font-size: 18px;
-       font-weight: bold;
-       margin-bottom: 6px;
-   }
-   .sr-detail-price {
-       color: #c00;
-       font-size: 16px;
-       font-weight: bold;
-       margin-bottom: 6px;
-   }
-   .sr-detail-meta {
-       color: #666;
-       font-size: 12px;
-       margin-bottom: 12px;
-   }
-   .sr-detail-desc {
-       color: #333;
-       font-size: 13px;
-       line-height: 1.5;
-       margin-bottom: 15px;
-   }
+flex: 1 1 260px;
 
-   /* ---- Keyboard focus visibility ---- */
-   #srSearchInput:focus-visible,
-   #srSearchBtn:focus-visible,
-   .sr-detail-close:focus-visible,
-   #srSidebar summary:focus-visible,
-   .subcat-item:focus-visible {
-       outline: 2px solid #32CD32;
-       outline-offset: 2px;
-   }
+justify-content: flex-end;
 
-   /* ---- Responsive breakpoints ---- */
-   @media (max-width: 1100px) {
-       .sr-grid { grid-template-columns: repeat(3, 1fr); }
-   }
-   @media (max-width: 800px) {
-       .sr-grid { grid-template-columns: repeat(2, 1fr); }
-   }
-   @media (max-width: 700px) {
-       .sr-main { flex-direction: column; }
-       .sr-sidebar-wrap { margin-bottom: 15px; }
-       #srSidebar { width: 100%; }
-   }
-   @media (max-width: 600px) {
-       body { padding: 12px; }
-       .sr-header { flex-direction: column; }
-       .sr-account-bar { justify-content: center; font-size: 12px; }
-       .sr-search-row { justify-content: stretch; }
-       #srSearchInput { max-width: none; }
-       .sr-detail-overlay { padding: 14px; }
-       .sr-detail-img-wrap { height: 210px; }
-   }
-   @media (max-width: 450px) {
-       .sr-grid { grid-template-columns: 1fr; gap: 12px; }
-   }
-   </style>
+}
+
+.sr-search-row label {
+
+font-size: 13px;
+
+font-weight: bold;
+
+color: #333;
+
+white-space: nowrap;
+
+}
+
+#srSearchInput {
+
+flex: 1 1 auto;
+
+min-width: 0;
+
+max-width: 250px;
+
+padding: 7px 8px;
+
+border: 1px solid #ccc;
+
+border-right: 0;
+
+font-size: 13px;
+
+}
+
+#srSearchBtn {
+
+padding: 7px 14px;
+
+border: 1px solid #ccc;
+
+background: #f0f0f0;
+
+font-size: 13px;
+
+cursor: pointer;
+
+margin-left: -1px;
+
+white-space: nowrap;
+
+}
+
+#srSearchBtn:hover { background: #e4e4e4; }
+
+
+/* ---- Layout ---- */
+
+.sr-main {
+
+display: flex;
+
+gap: 20px;
+
+}
+
+.sr-sidebar-wrap { flex-shrink: 0; }
+
+.sr-sidebar-tab {
+
+background: #e8e8e8;
+
+display: inline-block;
+
+padding: 3px 10px;
+
+border: 1px solid #ccc;
+
+border-bottom: 0;
+
+font-size: 12px;
+
+color: #333;
+
+}
+
+
+/* ---- Sidebar / category + subcategory active states ---- */
+
+#srSidebar {
+
+width: 200px;
+
+background: #fff;
+
+border: 1px solid #ccc;
+
+padding: 5px 0;
+
+color: #32CD32;
+
+}
+
+#srSidebar summary {
+
+list-style: none;
+
+padding: 7px 10px 7px 12px;
+
+font-size: 13px;
+
+cursor: pointer;
+
+color: #333;
+
+border-left: 3px solid transparent;
+
+transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+}
+
+#srSidebar summary::-webkit-details-marker { display: none; }
+
+#srSidebar summary:hover {
+
+background: #f5f5f5;
+
+border-left-color: #b7e6b0;
+
+}
+
+#srSidebar details[open] > summary {
+
+background: #eef9ee;
+
+border-left-color: #32CD32;
+
+color: #279327;
+
+font-weight: bold;
+
+}
+
+.subcat-item {
+
+padding: 7px 10px 7px 12px;
+
+font-size: 12px;
+
+cursor: pointer;
+
+color: #32CD32;
+
+border-left: 3px solid transparent;
+
+transition: background 0.15s, border-color 0.15s;
+
+}
+
+.subcat-item:hover {
+
+background: #f5f5f5;
+
+border-left-color: #b7e6b0;
+
+}
+
+.subcat-item.active {
+
+background: #eef9ee;
+
+border-left-color: #32CD32;
+
+color: #279327;
+
+font-weight: bold;
+
+}
+
+
+/* ---- Grid / cards ---- */
+
+.sr-grid {
+
+display: grid;
+
+grid-template-columns: repeat(4, 1fr);
+
+gap: 15px;
+
+}
+
+.sr-card {
+
+background: #fff;
+
+border: 1px solid #ccc;
+
+padding: 10px;
+
+cursor: pointer;
+
+transition: box-shadow 0.15s, border-color 0.15s;
+
+}
+
+.sr-card:hover {
+
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+border-color: #999;
+
+}
+
+.sr-img-box {
+
+width: 100%;
+
+height: 120px;
+
+background: #eee;
+
+overflow: hidden;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+}
+
+.sr-img-box img {
+
+max-width: 100%;
+
+max-height: 100%;
+
+object-fit: contain;
+
+display: block;
+
+}
+
+.sr-title {
+
+font-size: 12px;
+
+color: #32CD32;
+
+margin-top: 8px;
+
+font-weight: bold;
+
+line-height: 1.3;
+
+word-break: break-word;
+
+}
+
+.sr-seller-row {
+
+margin-top: 4px;
+
+display: flex;
+
+align-items: center;
+
+gap: 6px;
+
+flex-wrap: wrap;
+
+}
+
+.sr-seller {
+
+font-size: 12px;
+
+color: #999;
+
+}
+
+.sr-price {
+
+font-size: 14px;
+
+color: #c00;
+
+margin-top: 8px;
+
+font-weight: bold;
+
+}
+
+.sr-empty {
+
+color: #999;
+
+text-align: center;
+
+padding: 40px;
+
+grid-column: 1 / -1;
+
+font-size: 13px;
+
+}
+
+.sr-tab-panel {
+
+background: #fff;
+
+border: 1px solid #ccc;
+
+margin-bottom: 15px;
+
+}
+
+.sr-tab-header {
+
+background: #e8e8e8;
+
+padding: 8px 12px;
+
+font-size: 13px;
+
+font-weight: bold;
+
+color: #333;
+
+border-bottom: 1px solid #ccc;
+
+}
+
+.sr-tab-body {
+
+padding: 12px;
+
+}
+
+.sr-tab-body p {
+
+color: #666;
+
+font-size: 13px;
+
+margin: 0 0 10px 0;
+
+}
+
+
+.sr-img-wrap {
+
+position: relative;
+
+width: 100%;
+
+height: 120px;
+
+background: #eee;
+
+overflow: hidden;
+
+}
+
+.sr-img-wrap img {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%;
+
+height: 100%;
+
+object-fit: contain;
+
+opacity: 0;
+
+transition: opacity 0.3s;
+
+}
+
+.sr-img-wrap img.active {
+
+opacity: 1;
+
+}
+
+.sr-img-arrow {
+
+position: absolute;
+
+top: 50%;
+
+transform: translateY(-50%);
+
+width: 30px;
+
+height: 30px;
+
+background: rgba(255,255,255,0.85);
+
+border: 1px solid #ccc;
+
+border-radius: 3px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+cursor: pointer;
+
+font-size: 14px;
+
+color: #333;
+
+z-index: 5;
+
+user-select: none;
+
+}
+
+.sr-img-arrow:hover {
+
+background: rgba(255,255,255,1);
+
+border-color: #999;
+
+}
+
+.sr-img-arrow.prev { left: 4px; }
+
+.sr-img-arrow.next { right: 4px; }
+
+.sr-img-arrow.hidden { display: none; }
+
+.sr-img-counter {
+
+position: absolute;
+
+bottom: 4px;
+
+right: 6px;
+
+background: rgba(0,0,0,0.5);
+
+color: white;
+
+font-size: 10px;
+
+padding: 2px 6px;
+
+border-radius: 3px;
+
+z-index: 5;
+
+}
+
+
+/* ---- Product detail modal ---- */
+
+.sr-detail-overlay {
+
+display: none;
+
+position: fixed;
+
+top: 0; left: 0; right: 0; bottom: 0;
+
+background: rgba(0,0,0,0.5);
+
+z-index: 200;
+
+justify-content: center;
+
+align-items: center;
+
+padding: 40px;
+
+}
+
+.sr-detail-overlay.active { display: flex; }
+
+.sr-detail-box {
+
+background: #fff;
+
+border: 1px solid #ccc;
+
+max-width: 500px;
+
+width: 100%;
+
+max-height: 85vh;
+
+overflow-y: auto;
+
+position: relative;
+
+box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+
+}
+
+.sr-detail-close {
+
+position: absolute;
+
+top: 8px; left: 10px;
+
+color: #999;
+
+font-size: 20px;
+
+cursor: pointer;
+
+background: none;
+
+border: none;
+
+line-height: 1;
+
+z-index: 10;
+
+width: 32px;
+
+height: 32px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+}
+
+.sr-detail-close:hover { color: #333; }
+
+.sr-detail-img-wrap {
+
+position: relative;
+
+width: 100%;
+
+height: 280px;
+
+background: #eee;
+
+overflow: hidden;
+
+}
+
+.sr-detail-img-wrap img {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%;
+
+height: 100%;
+
+object-fit: contain;
+
+opacity: 0;
+
+transition: opacity 0.3s;
+
+}
+
+.sr-detail-img-wrap img.active {
+
+opacity: 1;
+
+}
+
+.sr-detail-content {
+
+padding: 15px;
+
+}
+
+.sr-detail-title {
+
+color: #32CD32;
+
+font-size: 18px;
+
+font-weight: bold;
+
+margin-bottom: 6px;
+
+}
+
+.sr-detail-price {
+
+color: #c00;
+
+font-size: 16px;
+
+font-weight: bold;
+
+margin-bottom: 6px;
+
+}
+
+.sr-detail-meta {
+
+color: #666;
+
+font-size: 12px;
+
+margin-bottom: 12px;
+
+}
+
+.sr-detail-desc {
+
+color: #333;
+
+font-size: 13px;
+
+line-height: 1.5;
+
+margin-bottom: 15px;
+
+}
+
+
+/* ---- Keyboard focus visibility ---- */
+
+#srSearchInput:focus-visible,
+
+#srSearchBtn:focus-visible,
+
+.sr-detail-close:focus-visible,
+
+#srSidebar summary:focus-visible,
+
+.subcat-item:focus-visible {
+
+outline: 2px solid #32CD32;
+
+outline-offset: 2px;
+
+}
+
+
+/* ---- Responsive breakpoints ---- */
+
+@media (max-width: 1100px) {
+
+.sr-grid { grid-template-columns: repeat(3, 1fr); }
+
+}
+
+@media (max-width: 800px) {
+
+.sr-grid { grid-template-columns: repeat(2, 1fr); }
+
+}
+
+@media (max-width: 700px) {
+
+.sr-main { flex-direction: column; }
+
+.sr-sidebar-wrap { margin-bottom: 15px; }
+
+#srSidebar { width: 100%; }
+
+}
+
+@media (max-width: 600px) {
+
+body { padding: 12px; }
+
+.sr-header { flex-direction: column; }
+
+.sr-account-bar { justify-content: center; font-size: 12px; }
+
+.sr-search-row { justify-content: stretch; }
+
+#srSearchInput { max-width: none; }
+
+.sr-detail-overlay { padding: 14px; }
+
+.sr-detail-img-wrap { height: 210px; }
+
+}
+
+@media (max-width: 450px) {
+
+.sr-grid { grid-template-columns: 1fr; gap: 12px; }
+
+}
+
+</style>
+
 </head>
+
 <body>
 
+
 <!-- Account bar -->
+
 <div class="sr-account-bar">
-   messages <span style="color: #999;">0</span> |
-   orders <span style="color: #999;">0</span> |
-   account <span style="color: #32CD32; font-weight: bold;">฿0.00</span>
+
+messages <span style="color: #999;">0</span> |
+
+orders <span style="color: #999;">0</span> |
+
+account <span style="color: #32CD32; font-weight: bold;">฿0.00</span>
+
 </div>
+
 
 <!-- Logo (acts as H1) + tagline centered underneath -->
-<div class="sr-header">
-    <div class="sr-logo-block">
-        <img src="Adobe Express - file.png" alt="Site Name"  >
-        <h3><b>your tagline here</b></h3>
-    </div>
 
-    <div class="sr-search-row">
-        <label for="srSearchInput">Search</label>
-        <input type="text" id="srSearchInput">
-        <button id="srSearchBtn">Go</button>
-    </div>
+<div class="sr-search-row">
+
+<label for="srSearchInput">Search</label>
+
+<input type="text" id="srSearchInput">
+
+<button id="srSearchBtn">Go</button>
+
 </div>
+
+
+
+<div class="sr-header">
+
+<div class="sr-logo-block">
+
+<img src="Adobe Express - file.png" alt="Site Name" >
+
+<h3><b>your tagline here</b></h3>
+
+</div>
+
+</div>
+
+
+
 
 
 <!-- Main content -->
+
 <div class="sr-main">
 
-   <!-- Sidebar -->
-   <div class="sr-sidebar-wrap">
-       <div class="sr-sidebar-tab">Shop by Category</div>
-       <div id="srSidebar">
 
-           <details data-cat="Glass">
-               <summary>Glass <span style="color: #999;">2</span></summary>
-               <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Drinkware">Drinkware</div>
-                   <div class="subcat-item" data-subcat="Antiques">Antiques</div>
-               </div>
-           </details>
+<!-- Sidebar -->
 
-           <details data-cat="Bronze">
-               <summary>Bronze <span style="color: #999;">2</span></summary>
-               <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Statues">Statues</div>
-                   <div class="subcat-item" data-subcat="Coins & Medals">Coins & Medals</div>
-               </div>
-           </details>
+<div class="sr-sidebar-wrap">
 
-           <details data-cat="Carbon">
-               <summary>Carbon <span style="color: #999;">2</span></summary>
-               <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Bike Parts">Bike Parts</div>
-                   <div class="subcat-item" data-subcat="Fishing Rods">Fishing Rods</div>
-               </div>
-           </details>
+<div class="sr-sidebar-tab">Shop by Category</div>
 
-           <details data-cat="Apples">
-               <summary>Apples <span style="color: #999;">2</span></summary>
-               <div style="padding-left: 15px;">
-                   <div class="subcat-item" data-subcat="Fresh Fruit">Fresh Fruit</div>
-                   <div class="subcat-item" data-subcat="Homemade Cider">Homemade Cider</div>
-               </div>
-           </details>
+<div id="srSidebar">
 
-       </div>
-   </div>
 
-   <!-- MAIN AREA -->
-   <div style="flex: 1; min-width: 0;">
+<details data-cat="Glass">
 
-       <div class="sr-tab-panel">
-           <div class="sr-tab-header" id="tab-title">Welcome</div>
-           <div class="sr-tab-body" id="tab-content">
-               <p>Select a category from the sidebar to browse listings.</p>
-           </div>
-       </div>
+<summary>Glass <span style="color: #999;">2</span></summary>
 
-       <div class="sr-grid" id="srGrid">
-           <div class="sr-empty">Placeholder — pick a category on the left, or edit this area in the HTML.</div>
-       </div>
+<div style="padding-left: 15px;">
 
-   </div>
+<div class="subcat-item" data-subcat="Drinkware">Drinkware</div>
+
+<div class="subcat-item" data-subcat="Antiques">Antiques</div>
 
 </div>
+
+</details>
+
+
+<details data-cat="Bronze">
+
+<summary>Bronze <span style="color: #999;">2</span></summary>
+
+<div style="padding-left: 15px;">
+
+<div class="subcat-item" data-subcat="Statues">Statues</div>
+
+<div class="subcat-item" data-subcat="Coins & Medals">Coins & Medals</div>
+
+</div>
+
+</details>
+
+
+<details data-cat="Carbon">
+
+<summary>Carbon <span style="color: #999;">2</span></summary>
+
+<div style="padding-left: 15px;">
+
+<div class="subcat-item" data-subcat="Bike Parts">Bike Parts</div>
+
+<div class="subcat-item" data-subcat="Fishing Rods">Fishing Rods</div>
+
+</div>
+
+</details>
+
+
+<details data-cat="Apples">
+
+<summary>Apples <span style="color: #999;">2</span></summary>
+
+<div style="padding-left: 15px;">
+
+<div class="subcat-item" data-subcat="Fresh Fruit">Fresh Fruit</div>
+
+<div class="subcat-item" data-subcat="Homemade Cider">Homemade Cider</div>
+
+</div>
+
+</details>
+
+
+</div>
+
+</div>
+
+
+<!-- MAIN AREA -->
+
+<div style="flex: 1; min-width: 0;">
+
+
+<div class="sr-tab-panel">
+
+<div class="sr-tab-header" id="tab-title">Welcome</div>
+
+<div class="sr-tab-body" id="tab-content">
+
+<p>Select a category from the sidebar to browse listings.</p>
+
+</div>
+
+</div>
+
+
+<div class="sr-grid" id="srGrid">
+
+<div class="sr-empty">Placeholder — pick a category on the left, or edit this area in the HTML.</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 <!-- Product Detail Modal -->
+
 <div class="sr-detail-overlay" id="srDetailOverlay">
-    <div class="sr-detail-box">
-        <button class="sr-detail-close" id="srDetailClose" aria-label="Close">&#10005;</button>
-        <div class="sr-detail-img-wrap" id="srDetailImgWrap"></div>
-        <div class="sr-detail-content">
-            <div class="sr-detail-title" id="srDetailTitle"></div>
-            <div class="sr-detail-price" id="srDetailPrice"></div>
-            <div class="sr-detail-meta" id="srDetailMeta"></div>
-            <div class="sr-detail-desc" id="srDetailDesc"></div>
-        </div>
-    </div>
+
+<div class="sr-detail-box">
+
+<button class="sr-detail-close" id="srDetailClose" aria-label="Close">&#10005;</button>
+
+<div class="sr-detail-img-wrap" id="srDetailImgWrap"></div>
+
+<div class="sr-detail-content">
+
+<div class="sr-detail-title" id="srDetailTitle"></div>
+
+<div class="sr-detail-price" id="srDetailPrice"></div>
+
+<div class="sr-detail-meta" id="srDetailMeta"></div>
+
+<div class="sr-detail-desc" id="srDetailDesc"></div>
+
 </div>
 
+</div>
+
+</div>
+
+
 <script>
+
 const categoryData = {
+
 "Glass": {
-    title: "Glass",
-    text: "Placeholder description for Glass. Edit this text.",
-    items: [
-        { title: "Hand-Blown Wine Glasses (Set of 4)", subcat: "Drinkware", seller: "Maria's Glassworks", price: "฿450.00", images: [] },
-        { title: "Vintage Amber Glass Vase", subcat: "Antiques", seller: "Somchai Home Finds", price: "฿780.00", images: [] }
-    ]
+
+title: "Glass",
+
+text: "Placeholder description for Glass. Edit this text.",
+
+items: [
+
+{ title: "Hand-Blown Wine Glasses (Set of 4)", subcat: "Drinkware", seller: "Maria's Glassworks", price: "฿450.00", images: [] },
+
+{ title: "Vintage Amber Glass Vase", subcat: "Antiques", seller: "Somchai Home Finds", price: "฿780.00", images: [] }
+
+]
+
 },
+
 "Bronze": {
-    title: "Bronze",
-    text: "Placeholder description for Bronze. Edit this text.",
-    items: [
-        { title: "Small Bronze Buddha Statue", subcat: "Statues", seller: "Wat Arun Crafts", price: "฿1,200.00", images: [] },
-        { title: "Antique Bronze Coin Set", subcat: "Coins & Medals", seller: "Old Siam Collectibles", price: "฿950.00", images: [] }
-    ]
+
+title: "Bronze",
+
+text: "Placeholder description for Bronze. Edit this text.",
+
+items: [
+
+{ title: "Small Bronze Buddha Statue", subcat: "Statues", seller: "Wat Arun Crafts", price: "฿1,200.00", images: [] },
+
+{ title: "Antique Bronze Coin Set", subcat: "Coins & Medals", seller: "Old Siam Collectibles", price: "฿950.00", images: [] }
+
+]
+
 },
+
 "Carbon": {
-    title: "Carbon",
-    text: "Placeholder description for Carbon. Edit this text.",
-    items: [
-        { title: "Carbon Fiber Road Bike Frame", subcat: "Bike Parts", seller: "Pattaya Cycles", price: "฿6,500.00", images: [] },
-        { title: "Carbon Fiber Fishing Rod", subcat: "Fishing Rods", seller: "Gulf Coast Angler", price: "฿1,100.00", images: [] }
-    ]
+
+title: "Carbon",
+
+text: "Placeholder description for Carbon. Edit this text.",
+
+items: [
+
+{ title: "Carbon Fiber Road Bike Frame", subcat: "Bike Parts", seller: "Pattaya Cycles", price: "฿6,500.00", images: [] },
+
+{ title: "Carbon Fiber Fishing Rod", subcat: "Fishing Rods", seller: "Gulf Coast Angler", price: "฿1,100.00", images: [] }
+
+]
+
 },
+
 "Apples": {
-    title: "Apples",
-    text: "Placeholder description for Apples. Edit this text.",
-    items: [
-        { title: "Fresh Fuji Apples (5kg Box)", subcat: "Fresh Fruit", seller: "Doi Ang Khang Orchard", price: "฿320.00", images: [] },
-        { title: "Homemade Apple Cider (1L)", subcat: "Homemade Cider", seller: "Baan Suan Ferments", price: "฿180.00", images: [] }
-    ]
+
+title: "Apples",
+
+text: "Placeholder description for Apples. Edit this text.",
+
+items: [
+
+{ title: "Fresh Fuji Apples (5kg Box)", subcat: "Fresh Fruit", seller: "Doi Ang Khang Orchard", price: "฿320.00", images: [] },
+
+{ title: "Homemade Apple Cider (1L)", subcat: "Homemade Cider", seller: "Baan Suan Ferments", price: "฿180.00", images: [] }
+
+]
+
 }
+
 };
 
+
 let currentDetailItem = null;
+
 let currentDetailImgIdx = 0;
+
 let currentGridItems = [];
 
+
 function renderCard(item, idx) {
-    const hasImages = item.images && item.images.length > 0;
-    let imgHtml = '';
 
-    if (hasImages) {
-        if (item.images.length === 1) {
-            imgHtml = `<div class="sr-img-box"><img src="${item.images[0]}" alt="${esc(item.title)}" onerror="this.parentElement.style.display='none'"></div>`;
-        } else {
-            const imgs = item.images.map((src, i) =>
-                `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(item.title)}" onerror="this.style.display='none'">`
-            ).join('');
-            imgHtml = `
-                <div class="sr-img-wrap" id="imgwrap-${idx}">
-                    ${imgs}
-                    <div class="sr-img-arrow prev hidden" id="arrow-prev-${idx}" onclick="cardArrow(event, ${idx}, -1)">&#9664;</div>
-                    <div class="sr-img-arrow next" id="arrow-next-${idx}" onclick="cardArrow(event, ${idx}, 1)">&#9654;</div>
-                    <div class="sr-img-counter">1 / ${item.images.length}</div>
-                </div>
-            `;
-        }
-    } else {
-        imgHtml = `<div class="sr-img-box" style="background:#ddd;"></div>`;
-    }
+const hasImages = item.images && item.images.length > 0;
 
-    return `
-        <div class="sr-card" data-subcat="${esc(item.subcat || '')}" onclick="openDetail(${idx})">
-            ${imgHtml}
-            <div class="sr-title">${esc(item.title)}</div>
-            <div class="sr-seller-row"><span class="sr-seller">${esc(item.seller || 'Anonymous')}</span></div>
-            <div class="sr-price">${esc(item.price || 'No price')}</div>
-        </div>
-    `;
+let imgHtml = '';
+
+
+if (hasImages) {
+
+if (item.images.length === 1) {
+
+imgHtml = `<div class="sr-img-box"><img src="${item.images[0]}" alt="${esc(item.title)}" onerror="this.parentElement.style.display='none'"></div>`;
+
+} else {
+
+const imgs = item.images.map((src, i) =>
+
+`<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(item.title)}" onerror="this.style.display='none'">`
+
+).join('');
+
+imgHtml = `
+
+<div class="sr-img-wrap" id="imgwrap-${idx}">
+
+${imgs}
+
+<div class="sr-img-arrow prev hidden" id="arrow-prev-${idx}" onclick="cardArrow(event, ${idx}, -1)">&#9664;</div>
+
+<div class="sr-img-arrow next" id="arrow-next-${idx}" onclick="cardArrow(event, ${idx}, 1)">&#9654;</div>
+
+<div class="sr-img-counter">1 / ${item.images.length}</div>
+
+</div>
+
+`;
+
 }
+
+} else {
+
+imgHtml = `<div class="sr-img-box" style="background:#ddd;"></div>`;
+
+}
+
+
+return `
+
+<div class="sr-card" data-subcat="${esc(item.subcat || '')}" onclick="openDetail(${idx})">
+
+${imgHtml}
+
+<div class="sr-title">${esc(item.title)}</div>
+
+<div class="sr-seller-row"><span class="sr-seller">${esc(item.seller || 'Anonymous')}</span></div>
+
+<div class="sr-price">${esc(item.price || 'No price')}</div>
+
+</div>
+
+`;
+
+}
+
 
 function cardArrow(e, cardIdx, dir) {
-    e.stopPropagation();
-    const wrap = document.getElementById('imgwrap-' + cardIdx);
-    if (!wrap) return;
-    const imgs = wrap.querySelectorAll('img');
-    const total = imgs.length;
-    let current = 0;
-    imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
 
-    let next = current + dir;
-    if (next < 0) next = total - 1;
-    if (next >= total) next = 0;
+e.stopPropagation();
 
-    imgs.forEach((img, i) => img.classList.toggle('active', i === next));
+const wrap = document.getElementById('imgwrap-' + cardIdx);
 
-    const prevArrow = document.getElementById('arrow-prev-' + cardIdx);
-    const nextArrow = document.getElementById('arrow-next-' + cardIdx);
-    const counter = wrap.querySelector('.sr-img-counter');
+if (!wrap) return;
 
-    if (total <= 1) {
-        if (prevArrow) prevArrow.classList.add('hidden');
-        if (nextArrow) nextArrow.classList.add('hidden');
-    } else {
-        if (prevArrow) prevArrow.classList.remove('hidden');
-        if (nextArrow) nextArrow.classList.remove('hidden');
-    }
-    if (counter) counter.textContent = (next + 1) + ' / ' + total;
+const imgs = wrap.querySelectorAll('img');
+
+const total = imgs.length;
+
+let current = 0;
+
+imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
+
+
+let next = current + dir;
+
+if (next < 0) next = total - 1;
+
+if (next >= total) next = 0;
+
+
+imgs.forEach((img, i) => img.classList.toggle('active', i === next));
+
+
+const prevArrow = document.getElementById('arrow-prev-' + cardIdx);
+
+const nextArrow = document.getElementById('arrow-next-' + cardIdx);
+
+const counter = wrap.querySelector('.sr-img-counter');
+
+
+if (total <= 1) {
+
+if (prevArrow) prevArrow.classList.add('hidden');
+
+if (nextArrow) nextArrow.classList.add('hidden');
+
+} else {
+
+if (prevArrow) prevArrow.classList.remove('hidden');
+
+if (nextArrow) nextArrow.classList.remove('hidden');
+
 }
+
+if (counter) counter.textContent = (next + 1) + ' / ' + total;
+
+}
+
 
 function renderGrid(items) {
-    if (!items || items.length === 0) {
-        return '<div class="sr-empty">No listings in this subcategory.</div>';
-    }
-    return items.map((item, i) => renderCard(item, i)).join('');
+
+if (!items || items.length === 0) {
+
+return '<div class="sr-empty">No listings in this subcategory.</div>';
+
 }
+
+return items.map((item, i) => renderCard(item, i)).join('');
+
+}
+
 
 function showCategory(cat, subcat) {
-    const data = categoryData[cat];
-    if (!data) return;
 
-    let items = data.items;
-    if (subcat) {
-        items = items.filter(item => item.subcat === subcat);
-    }
+const data = categoryData[cat];
 
-    currentGridItems = items;
-    document.getElementById('tab-title').textContent = subcat ? cat + ' — ' + subcat : data.title;
-    document.getElementById('tab-content').innerHTML = '<p>' + esc(data.text) + '</p>';
-    document.getElementById('srGrid').innerHTML = renderGrid(items);
+if (!data) return;
+
+
+let items = data.items;
+
+if (subcat) {
+
+items = items.filter(item => item.subcat === subcat);
+
 }
+
+
+currentGridItems = items;
+
+document.getElementById('tab-title').textContent = subcat ? cat + ' — ' + subcat : data.title;
+
+document.getElementById('tab-content').innerHTML = '<p>' + esc(data.text) + '</p>';
+
+document.getElementById('srGrid').innerHTML = renderGrid(items);
+
+}
+
 
 const allDetails = document.querySelectorAll('#srSidebar details');
+
 allDetails.forEach((detail) => {
-    detail.addEventListener('toggle', function() {
-        if (this.open) {
-            const cat = this.getAttribute('data-cat');
-            allDetails.forEach(d => { if (d !== this) d.removeAttribute('open'); });
-            showCategory(cat, null);
-            this.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
-        }
-    });
+
+detail.addEventListener('toggle', function() {
+
+if (this.open) {
+
+const cat = this.getAttribute('data-cat');
+
+allDetails.forEach(d => { if (d !== this) d.removeAttribute('open'); });
+
+showCategory(cat, null);
+
+this.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
+
+}
+
 });
+
+});
+
 
 document.querySelectorAll('.subcat-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const subcat = this.getAttribute('data-subcat');
-        const parent = this.closest('details');
-        const cat = parent.getAttribute('data-cat');
 
-        parent.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
+item.addEventListener('click', function(e) {
 
-        showCategory(cat, subcat);
-    });
+e.stopPropagation();
+
+const subcat = this.getAttribute('data-subcat');
+
+const parent = this.closest('details');
+
+const cat = parent.getAttribute('data-cat');
+
+
+parent.querySelectorAll('.subcat-item').forEach(s => s.classList.remove('active'));
+
+this.classList.add('active');
+
+
+showCategory(cat, subcat);
+
 });
 
+});
+
+
 function openDetail(idx) {
-    const item = currentGridItems[idx];
-    if (!item) return;
-    showDetailModal(item);
+
+const item = currentGridItems[idx];
+
+if (!item) return;
+
+showDetailModal(item);
+
 }
+
 
 function showDetailModal(foundItem) {
-    currentDetailItem = foundItem;
-    currentDetailImgIdx = 0;
 
-    document.getElementById('srDetailTitle').textContent = foundItem.title;
-    document.getElementById('srDetailPrice').textContent = foundItem.price || 'No price';
-    document.getElementById('srDetailMeta').innerHTML = esc(foundItem.subcat || '');
-    document.getElementById('srDetailDesc').textContent = 'Placeholder item description. Edit this text in the script.';
+currentDetailItem = foundItem;
 
-    const wrap = document.getElementById('srDetailImgWrap');
-    if (foundItem.images && foundItem.images.length > 0) {
-        const imgs = foundItem.images.map((src, i) =>
-            `<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(foundItem.title)}" onerror="this.style.display='none'">`
-        ).join('');
-        const prevClass = foundItem.images.length > 1 ? '' : 'hidden';
-        const nextClass = foundItem.images.length > 1 ? '' : 'hidden';
-        wrap.innerHTML = imgs + `
-            <div class="sr-img-arrow prev ${prevClass}" onclick="detailArrow(-1)">&#9664;</div>
-            <div class="sr-img-arrow next ${nextClass}" onclick="detailArrow(1)">&#9654;</div>
-            <div class="sr-img-counter" id="detailCounter">1 / ${foundItem.images.length}</div>
-        `;
-    } else {
-        wrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;">No image</div>';
-    }
+currentDetailImgIdx = 0;
 
-    document.getElementById('srDetailOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
+
+document.getElementById('srDetailTitle').textContent = foundItem.title;
+
+document.getElementById('srDetailPrice').textContent = foundItem.price || 'No price';
+
+document.getElementById('srDetailMeta').innerHTML = esc(foundItem.subcat || '');
+
+document.getElementById('srDetailDesc').textContent = 'Placeholder item description. Edit this text in the script.';
+
+
+const wrap = document.getElementById('srDetailImgWrap');
+
+if (foundItem.images && foundItem.images.length > 0) {
+
+const imgs = foundItem.images.map((src, i) =>
+
+`<img src="${src}" class="${i === 0 ? 'active' : ''}" data-idx="${i}" alt="${esc(foundItem.title)}" onerror="this.style.display='none'">`
+
+).join('');
+
+const prevClass = foundItem.images.length > 1 ? '' : 'hidden';
+
+const nextClass = foundItem.images.length > 1 ? '' : 'hidden';
+
+wrap.innerHTML = imgs + `
+
+<div class="sr-img-arrow prev ${prevClass}" onclick="detailArrow(-1)">&#9664;</div>
+
+<div class="sr-img-arrow next ${nextClass}" onclick="detailArrow(1)">&#9654;</div>
+
+<div class="sr-img-counter" id="detailCounter">1 / ${foundItem.images.length}</div>
+
+`;
+
+} else {
+
+wrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;">No image</div>';
+
 }
+
+
+document.getElementById('srDetailOverlay').classList.add('active');
+
+document.body.style.overflow = 'hidden';
+
+}
+
 
 function closeDetailModal() {
-    document.getElementById('srDetailOverlay').classList.remove('active');
-    document.body.style.overflow = '';
+
+document.getElementById('srDetailOverlay').classList.remove('active');
+
+document.body.style.overflow = '';
+
 }
+
 
 function detailArrow(dir) {
-    if (!currentDetailItem || !currentDetailItem.images) return;
-    const total = currentDetailItem.images.length;
-    currentDetailImgIdx += dir;
-    if (currentDetailImgIdx < 0) currentDetailImgIdx = total - 1;
-    if (currentDetailImgIdx >= total) currentDetailImgIdx = 0;
 
-    const wrap = document.getElementById('srDetailImgWrap');
-    const imgs = wrap.querySelectorAll('img');
-    imgs.forEach((img, i) => img.classList.toggle('active', i === currentDetailImgIdx));
-    document.getElementById('detailCounter').textContent = (currentDetailImgIdx + 1) + ' / ' + total;
+if (!currentDetailItem || !currentDetailItem.images) return;
+
+const total = currentDetailItem.images.length;
+
+currentDetailImgIdx += dir;
+
+if (currentDetailImgIdx < 0) currentDetailImgIdx = total - 1;
+
+if (currentDetailImgIdx >= total) currentDetailImgIdx = 0;
+
+
+const wrap = document.getElementById('srDetailImgWrap');
+
+const imgs = wrap.querySelectorAll('img');
+
+imgs.forEach((img, i) => img.classList.toggle('active', i === currentDetailImgIdx));
+
+document.getElementById('detailCounter').textContent = (currentDetailImgIdx + 1) + ' / ' + total;
+
 }
+
 
 document.getElementById('srDetailClose').addEventListener('click', closeDetailModal);
 
+
 document.getElementById('srDetailOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeDetailModal();
+
+if (e.target === this) closeDetailModal();
+
 });
+
 
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && document.getElementById('srDetailOverlay').classList.contains('active')) {
-        closeDetailModal();
-    }
+
+if (e.key === 'Escape' && document.getElementById('srDetailOverlay').classList.contains('active')) {
+
+closeDetailModal();
+
+}
+
 });
+
 
 const srSearchInput = document.getElementById('srSearchInput');
+
 const srSearchBtn = document.getElementById('srSearchBtn');
+
 let srOriginalGrid = '';
 
+
 function srDoSearch() {
-    const query = srSearchInput.value.trim().toLowerCase();
-    if (!query) {
-        document.getElementById('srGrid').innerHTML = srOriginalGrid;
-        document.getElementById('tab-title').textContent = 'Welcome';
-        document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
-        allDetails.forEach(d => d.removeAttribute('open'));
-        currentGridItems = [];
-        return;
-    }
 
-    const allCards = [];
-    let firstMatchCat = null;
-    let firstMatchSubcat = null;
+const query = srSearchInput.value.trim().toLowerCase();
 
-    for (const cat in categoryData) {
-        const data = categoryData[cat];
-        data.items.forEach(item => {
-            const text = (item.title + ' ' + item.subcat + ' ' + item.seller).toLowerCase();
-            if (text.includes(query)) {
-                allCards.push(item);
-                if (!firstMatchCat) {
-                    firstMatchCat = cat;
-                    firstMatchSubcat = item.subcat;
-                }
-            }
-        });
-    }
+if (!query) {
 
-    if (allCards.length === 0) {
-        document.getElementById('srGrid').innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
-        document.getElementById('tab-title').textContent = 'Search Results';
-        document.getElementById('tab-content').innerHTML = '<p>No matches.</p>';
-        allDetails.forEach(d => d.removeAttribute('open'));
-        currentGridItems = [];
-    } else {
-        currentGridItems = allCards;
-        document.getElementById('srGrid').innerHTML = renderGrid(allCards);
-        allDetails.forEach(d => {
-            if (d.getAttribute('data-cat') === firstMatchCat) {
-                d.setAttribute('open', '');
-                d.querySelectorAll('.subcat-item').forEach(s => {
-                    s.classList.toggle('active', s.getAttribute('data-subcat') === firstMatchSubcat);
-                });
-            } else {
-                d.removeAttribute('open');
-            }
-        });
-        document.getElementById('tab-title').textContent = 'Search: "' + esc(query) + '" — ' + firstMatchCat;
-        document.getElementById('tab-content').innerHTML = '<p>Found ' + allCards.length + ' listing(s) in ' + esc(firstMatchSubcat || 'all subcategories') + '.</p>';
-    }
+document.getElementById('srGrid').innerHTML = srOriginalGrid;
+
+document.getElementById('tab-title').textContent = 'Welcome';
+
+document.getElementById('tab-content').innerHTML = '<p>Select a category from the sidebar to browse listings.</p>';
+
+allDetails.forEach(d => d.removeAttribute('open'));
+
+currentGridItems = [];
+
+return;
+
 }
 
-srSearchBtn.addEventListener('click', srDoSearch);
-srSearchInput.addEventListener('keypress', function(e) { if(e.key === 'Enter') srDoSearch(); });
 
-window.addEventListener('load', function() {
-    srOriginalGrid = document.getElementById('srGrid').innerHTML;
+const allCards = [];
+
+let firstMatchCat = null;
+
+let firstMatchSubcat = null;
+
+
+for (const cat in categoryData) {
+
+const data = categoryData[cat];
+
+data.items.forEach(item => {
+
+const text = (item.title + ' ' + item.subcat + ' ' + item.seller).toLowerCase();
+
+if (text.includes(query)) {
+
+allCards.push(item);
+
+if (!firstMatchCat) {
+
+firstMatchCat = cat;
+
+firstMatchSubcat = item.subcat;
+
+}
+
+}
+
 });
 
-function esc(s) {
-    if (s == null) return '';
-    const d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
 }
+
+
+if (allCards.length === 0) {
+
+document.getElementById('srGrid').innerHTML = '<div class="sr-empty">No listings found for "' + esc(query) + '".</div>';
+
+document.getElementById('tab-title').textContent = 'Search Results';
+
+document.getElementById('tab-content').innerHTML = '<p>No matches.</p>';
+
+allDetails.forEach(d => d.removeAttribute('open'));
+
+currentGridItems = [];
+
+} else {
+
+currentGridItems = allCards;
+
+document.getElementById('srGrid').innerHTML = renderGrid(allCards);
+
+allDetails.forEach(d => {
+
+if (d.getAttribute('data-cat') === firstMatchCat) {
+
+d.setAttribute('open', '');
+
+d.querySelectorAll('.subcat-item').forEach(s => {
+
+s.classList.toggle('active', s.getAttribute('data-subcat') === firstMatchSubcat);
+
+});
+
+} else {
+
+d.removeAttribute('open');
+
+}
+
+});
+
+document.getElementById('tab-title').textContent = 'Search: "' + esc(query) + '" — ' + firstMatchCat;
+
+document.getElementById('tab-content').innerHTML = '<p>Found ' + allCards.length + ' listing(s) in ' + esc(firstMatchSubcat || 'all subcategories') + '.</p>';
+
+}
+
+}
+
+
+srSearchBtn.addEventListener('click', srDoSearch);
+
+srSearchInput.addEventListener('keypress', function(e) { if(e.key === 'Enter') srDoSearch(); });
+
+
+window.addEventListener('load', function() {
+
+srOriginalGrid = document.getElementById('srGrid').innerHTML;
+
+});
+
+
+function esc(s) {
+
+if (s == null) return '';
+
+const d = document.createElement('div');
+
+d.textContent = s;
+
+return d.innerHTML;
+
+}
+
 </script>
 
+
 </body>
+
 </html>
